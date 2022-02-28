@@ -26,7 +26,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'gradleTest.App'
+    mainClass = 'tech.charliewilkins.best.App'
 }
 
 tasks.named('test') {
