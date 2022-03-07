@@ -3,10 +3,8 @@ package tech.charliewilkins.BEST.World;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Toolkit;
 
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -15,8 +13,8 @@ import tech.charliewilkins.BEST.Vehicles.Microbe;
 public class World extends JPanel implements Runnable {
     private final int W_WIDTH = 350;
     private final int W_HEIGHT = 350;
-    private final int INITIAL_X = -40;
-    private final int INITIAL_Y = -40;
+    private final int INITIAL_X = 100;
+    private final int INITIAL_Y = 100;
     private final int DELAY = 25;
 
     private Thread animator;
@@ -50,7 +48,7 @@ public class World extends JPanel implements Runnable {
     }
 
     private void cycle() {
-        m.move();
+        m.step();
     }
 
     @Override
