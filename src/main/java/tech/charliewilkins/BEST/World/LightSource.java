@@ -35,4 +35,12 @@ public class LightSource {
         g2d.setPaint(Color.BLACK);
         g2d.draw(circle);
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 }
