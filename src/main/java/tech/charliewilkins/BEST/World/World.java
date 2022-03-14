@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.util.Random;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -19,9 +20,16 @@ public class World extends JPanel implements Runnable {
 
     private Thread animator;
     private Microbe m;
+    private LightSource l;
+    private Random rng;
 
     public World() {
+        rng = new Random();
+
         m = new Microbe(INITIAL_X, INITIAL_Y, W_WIDTH, W_HEIGHT);
+
+        // Create a LightSource at 50-(n-50)
+        l = new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50);
 
         initWorld();
     }
@@ -44,6 +52,7 @@ public class World extends JPanel implements Runnable {
         super.paintComponent(g);
 
         m.draw(g);
+        l.draw(g);
         Toolkit.getDefaultToolkit().sync();
     }
 
