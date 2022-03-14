@@ -25,5 +25,11 @@ hs_err_pid*
 # Gradle-related
 .gradle/
 build/
+gradle/
+gradlew
+gradlew.bat
 
 bin/
+
+# IntelliJ-related
+.idea/
