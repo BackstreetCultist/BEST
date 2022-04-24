@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import tech.charliewilkins.BEST.Vehicles.Microbe;
+import tech.charliewilkins.BEST.World.Sources.LightSource;
 
 public class World extends JPanel implements Runnable {
     private final int W_WIDTH = 350;

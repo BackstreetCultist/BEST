@@ -9,6 +9,8 @@ import java.awt.geom.Line2D;
 
 import org.ejml.simple.SimpleMatrix;
 
+import tech.charliewilkins.BEST.Vehicles.Sensors.Sensor;
+
 import java.util.Random;
 
 public class Microbe {
@@ -35,6 +37,10 @@ public class Microbe {
 
     // Other
     private Random rnd;
+
+    // SO it has eight sensor positions,
+    // with 0 being 'dead ahead' e.g where the line terminates
+    private Sensor[] sensors; 
 
     public Microbe(int x,int y, int worldWidth, int worldHeight) {
         // World
