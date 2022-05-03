@@ -9,8 +9,10 @@ import java.awt.geom.Line2D;
 
 import org.ejml.simple.SimpleMatrix;
 
+import tech.charliewilkins.BEST.Vehicles.Sensors.LightSensor;
 import tech.charliewilkins.BEST.Vehicles.Sensors.Sensor;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Microbe {
@@ -40,7 +42,7 @@ public class Microbe {
 
     // SO it has eight sensor positions,
     // with 0 being 'dead ahead' e.g where the line terminates
-    private Sensor[] sensors; 
+    private Sensor[] sensors = new Sensor[8];
 
     public Microbe(int x,int y, int worldWidth, int worldHeight) {
         // World
@@ -89,6 +91,17 @@ public class Microbe {
         Line2D line = new Line2D.Double();
         line.setLine(x,y,x+((diameter/2)*Math.cos(theta)),y+((diameter/2)*Math.sin(theta)));
         g2d.draw(line);
+
+        // Draw sensors
+        for (int i = 0; i < 8; i++){
+            if (sensors[i] != null){
+                // We want the sensors arranged in a circle, at 22.5 degree angles around the perimeter of the microbe
+                int sx = x + (int) ((diameter/2)*Math.cos(theta + (Math.toRadians(45 * i))));
+                int sy = y + (int) ((diameter/2)*Math.sin(theta + (Math.toRadians(45 * i))));
+                sensors[i].setCoords(sx, sy);
+                sensors[i].draw(g);
+            }
+        }
     }
 
     public void step(){
