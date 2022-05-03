@@ -9,10 +9,8 @@ import java.awt.geom.Line2D;
 
 import org.ejml.simple.SimpleMatrix;
 
-import tech.charliewilkins.BEST.Vehicles.Sensors.LightSensor;
 import tech.charliewilkins.BEST.Vehicles.Sensors.Sensor;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Microbe {
