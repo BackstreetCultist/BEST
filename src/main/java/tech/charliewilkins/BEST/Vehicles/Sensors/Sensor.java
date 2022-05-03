@@ -2,6 +2,7 @@ package tech.charliewilkins.BEST.Vehicles.Sensors;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 import tech.charliewilkins.BEST.World.Sources.Source;
 
@@ -21,7 +22,7 @@ public class Sensor {
         this.size = 10;
     }
 
-    public double sense(Source[] sources) {
+    public double sense(ArrayList<Source> sources) {
         return 0.0;
     }
 

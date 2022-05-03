@@ -9,7 +9,9 @@ import java.awt.geom.Line2D;
 
 import org.ejml.simple.SimpleMatrix;
 
+import tech.charliewilkins.BEST.Vehicles.Sensors.LightSensor;
 import tech.charliewilkins.BEST.Vehicles.Sensors.Sensor;
+import tech.charliewilkins.BEST.World.World;
 
 import java.util.Random;
 
@@ -17,6 +19,7 @@ public class Microbe {
     // World
     private int worldWidth;
     private int worldHeight;
+    private World worldRef; // Need a ref to the world it exists in
 
     // Microbe
     private int diameter;
@@ -26,8 +29,8 @@ public class Microbe {
     private int y;
 
     // Movement
-    private int vl;
-    private int vr;
+    private double vl;
+    private double vr;
     private double theta;
 
     // Random walk
@@ -42,10 +45,11 @@ public class Microbe {
     // with 0 being 'dead ahead' e.g where the line terminates
     private Sensor[] sensors = new Sensor[8];
 
-    public Microbe(int x,int y, int worldWidth, int worldHeight) {
+    public Microbe(int x, int y, int worldWidth, int worldHeight, World worldRef) {
         // World
         this.worldWidth = worldWidth;
         this.worldHeight = worldHeight;
+        this.worldRef = worldRef;
 
         // Microbe
         this.diameter = 50;
@@ -66,6 +70,9 @@ public class Microbe {
 
         // Other
         this.rnd = new Random();
+
+        sensors[1] = new LightSensor(0, 0);
+        sensors[7] = new LightSensor(0, 0);
     }
 
     public void draw(Graphics g) {

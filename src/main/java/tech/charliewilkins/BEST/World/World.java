@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
@@ -11,6 +12,7 @@ import javax.swing.JPanel;
 
 import tech.charliewilkins.BEST.Vehicles.Microbe;
 import tech.charliewilkins.BEST.World.Sources.LightSource;
+import tech.charliewilkins.BEST.World.Sources.Source;
 
 public class World extends JPanel implements Runnable {
     private final int W_WIDTH = 350;
@@ -23,14 +25,17 @@ public class World extends JPanel implements Runnable {
     private Microbe m;
     private LightSource l;
     private Random rng;
+    private ArrayList<Source> sources;
 
     public World() {
         rng = new Random();
+        sources = new ArrayList<>();
 
-        m = new Microbe(INITIAL_X, INITIAL_Y, W_WIDTH, W_HEIGHT);
+        m = new Microbe(INITIAL_X, INITIAL_Y, W_WIDTH, W_HEIGHT, this);
 
         // Create a LightSource at 50-(n-50)
         l = new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50);
+        sources.add(l);
 
         initWorld();
     }
@@ -55,6 +60,10 @@ public class World extends JPanel implements Runnable {
         m.draw(g);
         l.draw(g);
         Toolkit.getDefaultToolkit().sync();
+    }
+
+    public ArrayList<Source> getSources() {
+        return sources;
     }
 
     private void cycle() {
