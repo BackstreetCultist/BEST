@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 
 import org.ejml.simple.SimpleMatrix;
 
@@ -70,9 +71,6 @@ public class Microbe {
 
         // Other
         this.rnd = new Random();
-
-        sensors[1] = new LightSensor(0, 0);
-        sensors[7] = new LightSensor(0, 0);
     }
 
     public void draw(Graphics g) {
@@ -96,6 +94,29 @@ public class Microbe {
         Line2D line = new Line2D.Double();
         line.setLine(x,y,x+((diameter/2)*Math.cos(theta)),y+((diameter/2)*Math.sin(theta)));
         g2d.draw(line);
+
+        // Draw some black blocks for motors
+        // We want them behind the robot and offset to the left and right
+        int lmx = x + (int) (diameter*Math.cos(theta + (Math.toRadians(225))));
+        int lmy = y + (int) (diameter*Math.sin(theta + (Math.toRadians(225))));
+        Rectangle2D.Double lm = new Rectangle2D.Double((lmx - (diameter / 10)), (lmy - (diameter / 10)), (diameter / 5), (diameter / 5));
+        g2d.setPaint(Color.BLACK);
+        g2d.fill(lm);
+
+        int rmx = x + (int) (diameter*Math.cos(theta + (Math.toRadians(135))));
+        int rmy = y + (int) (diameter*Math.sin(theta + (Math.toRadians(135))));
+        Rectangle2D.Double rm = new Rectangle2D.Double((rmx - (diameter / 10)), (rmy - (diameter / 10)), (diameter / 5), (diameter / 5));
+        g2d.setPaint(Color.BLACK);
+        g2d.fill(rm);
+
+        // Draw axles connecting the motors
+        Line2D la = new Line2D.Double();
+        la.setLine(x,y,lmx,lmy);
+        g2d.draw(la);
+
+        Line2D ra = new Line2D.Double();
+        ra.setLine(x,y,rmx,rmy);
+        g2d.draw(ra);
 
         // Draw sensors
         for (int i = 0; i < 8; i++){

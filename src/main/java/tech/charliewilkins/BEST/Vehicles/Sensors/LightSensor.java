@@ -9,7 +9,7 @@ import tech.charliewilkins.BEST.World.Sources.Source;
 public class LightSensor extends Sensor {
 
     public LightSensor(int x, int y) {
-        super(x, y, Color.WHITE);
+        super(x, y, Color.YELLOW);
     }
 
     // This code borrowed from lab 1

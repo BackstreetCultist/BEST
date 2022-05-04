@@ -34,7 +34,7 @@ public class Sensor {
         rh.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         g2d.setRenderingHints(rh);
 
-        // Draw the light sensor as a white square with black outline
+        // Draw the sensor as a square with black outline
         double squareX = x - size / 2.0; // As Rectangle2D takes upper left co-ord
         double squareY = y - size / 2.0;
         Rectangle2D.Double square = new Rectangle2D.Double(squareX, squareY, size, size);
