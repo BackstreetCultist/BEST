@@ -10,10 +10,12 @@ import java.awt.geom.Rectangle2D;
 
 import org.ejml.simple.SimpleMatrix;
 
-import tech.charliewilkins.BEST.Vehicles.Sensors.LightSensor;
+import tech.charliewilkins.BEST.Vehicles.Connector.Motor;
+import tech.charliewilkins.BEST.Vehicles.Connector.Transferance;
 import tech.charliewilkins.BEST.Vehicles.Sensors.Sensor;
 import tech.charliewilkins.BEST.World.World;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Microbe {
@@ -45,6 +47,8 @@ public class Microbe {
     // SO it has eight sensor positions,
     // with 0 being 'dead ahead' e.g where the line terminates
     private Sensor[] sensors = new Sensor[8];
+    // It also has a variable number of connectors
+    private ArrayList<Connector> connectors;
 
     public Microbe(int x, int y, int worldWidth, int worldHeight, World worldRef) {
         // World
@@ -71,6 +75,7 @@ public class Microbe {
 
         // Other
         this.rnd = new Random();
+        connectors = new ArrayList<>();
     }
 
     public void draw(Graphics g) {
@@ -128,6 +133,11 @@ public class Microbe {
                 sensors[i].draw(g);
             }
         }
+
+        // Draw connectors
+        for (Connector connector : connectors) {
+            connector.draw(g, x, y, theta, diameter);
+        }
     }
 
     public void step(){
@@ -152,7 +162,28 @@ public class Microbe {
     }
 
     public void transferFunction() {
-        randomMove();
+        // randomMove();
+        vl = 0;
+        vr = 0;
+
+        for (Connector connector: connectors) {
+            if (connector.getMotor() == Motor.LEFT) {
+                if (connector.getTransferance() == Transferance.ATTRACT) {
+                    vl += connector.getSensor().sense(worldRef.getSources());
+                }
+                else {
+                    vl -= connector.getSensor().sense(worldRef.getSources());
+                }
+            }
+            else {
+                if (connector.getTransferance() == Transferance.ATTRACT) {
+                    vr += connector.getSensor().sense(worldRef.getSources());
+                }
+                else {
+                    vr -= connector.getSensor().sense(worldRef.getSources());
+                }
+            }
+        }
     }
 
     // Makes move in x and y based on vl and vt
