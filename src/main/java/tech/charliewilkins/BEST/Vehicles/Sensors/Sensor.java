@@ -14,12 +14,11 @@ public class Sensor {
     protected final int size;
     protected final Color color;
 
-    public Sensor(int x, int y, Color color) {
+    public Sensor(int x, int y, int size, Color color) {
         this.x = x;
         this.y = y;
+        this.size = size;
         this.color = color;
-
-        this.size = 10;
     }
 
     public double sense(ArrayList<Source> sources) {

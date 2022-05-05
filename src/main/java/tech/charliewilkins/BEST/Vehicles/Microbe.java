@@ -42,19 +42,18 @@ public class Microbe {
 
     // Other
     private Random rnd;
-
     // SO it has eight sensor positions,
     // with 0 being 'dead ahead' e.g where the line terminates
     private Sensor[] sensors = new Sensor[8];
     // It also has a variable number of connectors
     private ArrayList<Connector> connectors;
 
-    public Microbe(int x, int y, World worldRef) {
+    public Microbe(int x, int y, int diameter, World worldRef) {
         // World
         this.worldRef = worldRef;
 
         // Microbe
-        this.diameter = 50;
+        this.diameter = diameter;
 
         // Coordinates
         this.x = x;
@@ -75,8 +74,8 @@ public class Microbe {
         connectors = new ArrayList<>();
 
         //TODO this is just for test
-        sensors[1] = new LightSensor(0, 0);
-        sensors[7] = new LightSensor(0, 0);
+        sensors[1] = new LightSensor(0, 0, diameter / 5);
+        sensors[7] = new LightSensor(0, 0, diameter / 5);
 
         connectors.add(new Connector(sensors[1], Motor.LEFT, Transferance.ATTRACT));
         connectors.add(new Connector(sensors[7], Motor.RIGHT, Transferance.ATTRACT));
@@ -189,9 +188,14 @@ public class Microbe {
             }
         }
 
-        if (vl < 1 && vr < 1) {
+        // Minimum speed
+        if (vl < 2 && vr < 2) {
             randomMove();
         }
+
+        // Maximum speed
+        vl = (vl > 20) ? 20 : vl;
+        vr = (vr > 20) ? 20 : vr;
 
         vl = vl * worldRef.getSimSpeed();
         vr = vr * worldRef.getSimSpeed();
@@ -273,8 +277,8 @@ public class Microbe {
             vl = -1;
         }
         else {
-            vr = 5;
-            vl = 5;
+            vr = 2;
+            vl = 2;
         }
         randomCount++;
     }

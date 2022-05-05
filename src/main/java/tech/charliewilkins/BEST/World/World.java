@@ -32,7 +32,7 @@ public class World extends JPanel implements Runnable {
         rng = new Random();
         sources = new ArrayList<>();
 
-        m = new Microbe(INITIAL_X, INITIAL_Y, this);
+        m = new Microbe(INITIAL_X, INITIAL_Y, 30, this);
 
         // Create a LightSource at 50-(n-50)
         l = new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50);
