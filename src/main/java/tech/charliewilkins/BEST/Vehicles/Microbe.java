@@ -1,6 +1,7 @@
 package tech.charliewilkins.BEST.Vehicles;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -26,6 +27,7 @@ public class Microbe {
 
     // Microbe
     private int diameter;
+    private int health;
 
     // Coordinates
     private int x;
@@ -48,6 +50,7 @@ public class Microbe {
     private Sensor[] sensors = new Sensor[8];
     // It also has a variable number of connectors
     private ArrayList<Connector> connectors;
+    Font font;
 
     public Microbe(int x, int y, World worldRef) {
         // World
@@ -55,6 +58,7 @@ public class Microbe {
 
         // Microbe
         this.diameter = worldRef.getMicrobeSize();
+        this.health = 500;
 
         // Coordinates
         this.x = x;
@@ -73,6 +77,7 @@ public class Microbe {
         // Other
         this.rnd = new Random();
         connectors = new ArrayList<>();
+        font = new Font("Serif", Font.PLAIN, 11);
 
         //TODO this is just for test
         sensors[1] = new LightSensor(0, 0, diameter / 5);
@@ -142,6 +147,11 @@ public class Microbe {
         for (Connector connector : connectors) {
             connector.draw(g, x, y, theta, diameter);
         }
+
+        // Add a counter for the microbe's health
+        g2d.setPaint(Color.BLACK);
+        g2d.setFont(font);
+        g2d.drawString(Integer.toString(health), Math.round(x-((diameter/2)*Math.cos(theta))), Math.round(y-((diameter/2)*Math.sin(theta))));
     }
 
     public void step(){
@@ -155,6 +165,12 @@ public class Microbe {
         x = (x > worldRef.getWorldHeight()+20) ? 0 : x;
         y = (y < -20) ? worldRef.getWorldHeight() : y;
         x = (x < -20) ? worldRef.getWorldWidth() : x;
+
+        // Step down health and kill if dead
+        health -= worldRef.getSimSpeed();
+        if (health <= 0) {
+            worldRef.killMicrobe(this);
+        }
     }
 
     // Sets vl and vr

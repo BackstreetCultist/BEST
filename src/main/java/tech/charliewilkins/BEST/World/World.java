@@ -30,13 +30,15 @@ public class World extends JPanel implements Runnable {
     private ArrayList<Source> sources;
 
     private ArrayList<Microbe> microbes;
+    private ArrayList<Microbe> microbesToDelete;
     MicrobeBuilder builder;
 
     public World() {
         rng = new Random();
         sources = new ArrayList<>();
-        builder = new MicrobeBuilder(this);
         microbes = new ArrayList<>();
+        microbesToDelete = new ArrayList<>();
+        builder = new MicrobeBuilder(this);
 
         // Create a LightSource at 50-(n-50)
         l = new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50);
@@ -70,6 +72,10 @@ public class World extends JPanel implements Runnable {
         Toolkit.getDefaultToolkit().sync();
     }
 
+    public void killMicrobe(Microbe microbe) {
+        microbesToDelete.add(microbe);
+    }
+
     public int getWorldHeight() {
         return W_HEIGHT;
     }
@@ -91,20 +97,28 @@ public class World extends JPanel implements Runnable {
     }
 
     private void cycle() {
-        // Create microbes if not enough
-        if (microbes.size() < 1) {
+        // Create microbes if not enough - TODO for testing
+        if (microbes.size() < 2) {
             microbes.add(builder.build(INITIAL_X, INITIAL_Y, ""));
+            microbes.add(builder.build(INITIAL_X+100, INITIAL_Y+100, ""));
         }
 
         for (Microbe microbe: microbes){
             microbe.step();
         }
+
+        // Delete microbes that have died
+        microbes.removeAll(microbesToDelete);
     }
 
     @Override
     public void run() {
         long beforeTime, timeDiff, sleep;
         beforeTime = System.currentTimeMillis();
+
+        //TODO for test
+        microbes.add(builder.build(INITIAL_X, INITIAL_Y, ""));
+        microbes.add(builder.build(INITIAL_X+100, INITIAL_Y+100, ""));
 
         while (true) {
             cycle();
