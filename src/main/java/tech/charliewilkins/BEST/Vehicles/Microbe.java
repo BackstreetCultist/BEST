@@ -150,18 +150,10 @@ public class Microbe {
         move();
 
         // Retrieve microbe if it escapes petri dish
-        if (y > (worldRef.getWorldHeight()+20)) {
-            y = 0;
-        }
-        if (x > (worldRef.getWorldWidth()+20)) {
-            x = 0;
-        }
-        if (y < (-20)) {
-            y = worldRef.getWorldHeight();
-        }
-        if (x < (-20)) {
-            x = worldRef.getWorldWidth();
-        }
+        y = (y > worldRef.getWorldHeight()+20) ? 0 : y;
+        x = (x > worldRef.getWorldHeight()+20) ? 0 : x;
+        y = (y < -20) ? worldRef.getWorldHeight() : y;
+        x = (x < -20) ? worldRef.getWorldWidth() : x;
     }
 
     // Sets vl and vr
