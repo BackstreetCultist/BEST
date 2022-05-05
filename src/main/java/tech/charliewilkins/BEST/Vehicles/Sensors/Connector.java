@@ -1,22 +1,20 @@
-package tech.charliewilkins.BEST.Vehicles;
+package tech.charliewilkins.BEST.Vehicles.Sensors;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 
-import tech.charliewilkins.BEST.Vehicles.Sensors.Sensor;
-
 // A connector connects a sensor to a motor
 // Its effect can be excitative, depressive, ...
 // Thus each connector has a target sensor, a target motor and an effect
 public class Connector {
-    enum Transferance {
+    public enum Transferance {
         ATTRACT,
         REPEL
     }
 
-    enum Motor {
+    public enum Motor {
         LEFT,
         RIGHT
     }

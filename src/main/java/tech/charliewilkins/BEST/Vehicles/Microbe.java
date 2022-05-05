@@ -10,10 +10,11 @@ import java.awt.geom.Rectangle2D;
 
 import org.ejml.simple.SimpleMatrix;
 
-import tech.charliewilkins.BEST.Vehicles.Connector.Motor;
-import tech.charliewilkins.BEST.Vehicles.Connector.Transferance;
+import tech.charliewilkins.BEST.Vehicles.Sensors.Connector;
 import tech.charliewilkins.BEST.Vehicles.Sensors.LightSensor;
 import tech.charliewilkins.BEST.Vehicles.Sensors.Sensor;
+import tech.charliewilkins.BEST.Vehicles.Sensors.Connector.Motor;
+import tech.charliewilkins.BEST.Vehicles.Sensors.Connector.Transferance;
 import tech.charliewilkins.BEST.World.World;
 
 import java.util.ArrayList;
@@ -48,12 +49,12 @@ public class Microbe {
     // It also has a variable number of connectors
     private ArrayList<Connector> connectors;
 
-    public Microbe(int x, int y, int diameter, World worldRef) {
+    public Microbe(int x, int y, World worldRef) {
         // World
         this.worldRef = worldRef;
 
         // Microbe
-        this.diameter = diameter;
+        this.diameter = worldRef.getMicrobeSize();
 
         // Coordinates
         this.x = x;
