@@ -12,6 +12,7 @@ import org.ejml.simple.SimpleMatrix;
 
 import tech.charliewilkins.BEST.Vehicles.Connector.Motor;
 import tech.charliewilkins.BEST.Vehicles.Connector.Transferance;
+import tech.charliewilkins.BEST.Vehicles.Sensors.LightSensor;
 import tech.charliewilkins.BEST.Vehicles.Sensors.Sensor;
 import tech.charliewilkins.BEST.World.World;
 
@@ -20,8 +21,6 @@ import java.util.Random;
 
 public class Microbe {
     // World
-    private int worldWidth;
-    private int worldHeight;
     private World worldRef; // Need a ref to the world it exists in
 
     // Microbe
@@ -50,10 +49,8 @@ public class Microbe {
     // It also has a variable number of connectors
     private ArrayList<Connector> connectors;
 
-    public Microbe(int x, int y, int worldWidth, int worldHeight, World worldRef) {
+    public Microbe(int x, int y, World worldRef) {
         // World
-        this.worldWidth = worldWidth;
-        this.worldHeight = worldHeight;
         this.worldRef = worldRef;
 
         // Microbe
@@ -76,6 +73,13 @@ public class Microbe {
         // Other
         this.rnd = new Random();
         connectors = new ArrayList<>();
+
+        //TODO this is just for test
+        sensors[1] = new LightSensor(0, 0);
+        sensors[7] = new LightSensor(0, 0);
+
+        connectors.add(new Connector(sensors[1], Motor.LEFT, Transferance.ATTRACT));
+        connectors.add(new Connector(sensors[7], Motor.RIGHT, Transferance.ATTRACT));
     }
 
     public void draw(Graphics g) {
@@ -147,22 +151,22 @@ public class Microbe {
         move();
 
         // Retrieve microbe if it escapes petri dish
-        if (y > (worldHeight+20)) {
+        if (y > (worldRef.getWorldHeight()+20)) {
             y = 0;
         }
-        if (x > (worldWidth+20)) {
+        if (x > (worldRef.getWorldWidth()+20)) {
             x = 0;
         }
         if (y < (-20)) {
-            y = worldHeight;
+            y = worldRef.getWorldHeight();
         }
         if (x < (-20)) {
-            x = worldWidth;
+            x = worldRef.getWorldWidth();
         }
     }
 
+    // Sets vl and vr
     public void transferFunction() {
-        // randomMove();
         vl = 0;
         vr = 0;
 
@@ -184,6 +188,13 @@ public class Microbe {
                 }
             }
         }
+
+        if (vl < 1 && vr < 1) {
+            randomMove();
+        }
+
+        vl = vl * worldRef.getSimSpeed();
+        vr = vr * worldRef.getSimSpeed();
     }
 
     // Makes move in x and y based on vl and vt
