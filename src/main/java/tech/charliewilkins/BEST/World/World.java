@@ -25,17 +25,18 @@ public class World extends JPanel implements Runnable {
     private final int MICROBE_SIZE = 30;
 
     private Thread animator;
-    private Microbe m;
     private LightSource l;
     private Random rng;
     private ArrayList<Source> sources;
 
+    private ArrayList<Microbe> microbes;
+    MicrobeBuilder builder;
+
     public World() {
         rng = new Random();
         sources = new ArrayList<>();
-        MicrobeBuilder builder = new MicrobeBuilder(this);
-
-        m = builder.build(INITIAL_X, INITIAL_Y, "");
+        builder = new MicrobeBuilder(this);
+        microbes = new ArrayList<>();
 
         // Create a LightSource at 50-(n-50)
         l = new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50);
@@ -61,7 +62,10 @@ public class World extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        m.draw(g);
+        for (Microbe microbe : microbes) {
+            microbe.draw(g);
+        }
+        
         l.draw(g);
         Toolkit.getDefaultToolkit().sync();
     }
@@ -87,7 +91,14 @@ public class World extends JPanel implements Runnable {
     }
 
     private void cycle() {
-        m.step();
+        // Create microbes if not enough
+        if (microbes.size() < 1) {
+            microbes.add(builder.build(INITIAL_X, INITIAL_Y, ""));
+        }
+
+        for (Microbe microbe: microbes){
+            microbe.step();
+        }
     }
 
     @Override
