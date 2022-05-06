@@ -25,7 +25,6 @@ public class World extends JPanel implements Runnable {
     private final int MICROBE_SIZE = 30;
 
     private Thread animator;
-    private LightSource l;
     private Random rng;
     private ArrayList<Source> sources;
 
