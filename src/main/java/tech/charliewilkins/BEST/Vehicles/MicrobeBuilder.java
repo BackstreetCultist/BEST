@@ -18,36 +18,48 @@ public class MicrobeBuilder {
         this.worldRef = worldRef;
     }
 
-    // DNA for Agression:
-    // 00 01 00 00 00 00 00 01
-    // 0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  1
-    // 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-    // 0001000000000001001000000000000100000000000000000000000000000000
+    // New DNA Structure:
+    // 00 00 00 00 - four pairs of sensors
+    // 00 00 00 00 - activated or not
+    // 00 00 00 00 - crossed or not
+    // 00 00 00 00 - profile
+
+    // DNA for Aggression:
+    // 00 01 00 00
+    // 00 01 00 00
+    // 00 01 00 00
+    // 00 00 00 00
+    // 00010000000100000001000000000000
 
     // DNA for Fear:
-    // 00 01 00 00 00 00 00 01
-    // 0  0  0  1  0  0  0  0  0  0  0  0  0  0  1  0
-    // 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-    // 0001000000000001000100000000001000000000000000000000000000000000
+    // 00 01 00 00
+    // 00 01 00 00
+    // 00 00 00 00
+    // 00 00 00 00
+    // 00010000000100000000000000000000
 
     // DNA for Love:
-    // 00 01 00 00 00 00 00 01
-    // 0  0  0  1  0  0  0  0  0  0  0  0  0  0  1  0
-    // 00 00 00 01 00 00 00 00 00 00 00 00 00 00 01 00
-    // 0001000000000001000100000000001000000001000000000000000000000100
+    // 00 01 00 00
+    // 00 01 00 00
+    // 00 01 00 00
+    // 00 01 00 00
+    // 00010000000100000001000000010000
 
     // DNA for Exploration:
-    // 00 01 00 00 00 00 00 01
-    // 0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  1
-    // 00 00 01 00 00 00 00 00 00 00 00 00 00 00 00 01
-    // 0001000000000001001000000000000100000100000000000000000000000001
+    // 00 01 00 00
+    // 00 01 00 00
+    // 00 00 00 00
+    // 00 01 00 00
+    // 00010000000100000000000000010000
+
     public Microbe build(int x, int y, String genome) {
-        String sensorDNA = genome.substring(0,16);
-        String connectorDNA = genome.substring(16,32);
-        String connectorConfigDNA = genome.substring(32);
+        String sensorDNA = genome.substring(0,8);
+        String connectorActivationDNA = genome.substring(8,16);
+        String connectorCrossoverDNA = genome.substring(16,24);
+        String connectorConfigDNA = genome.substring(24,32);
 
         final Sensor[] sensors = buildSensorList(sensorDNA);
-        ArrayList<Connector> connectors = buildConnectorList(connectorDNA, connectorConfigDNA, sensors);
+        ArrayList<Connector> connectors = buildConnectorList(connectorActivationDNA, connectorCrossoverDNA, connectorConfigDNA, sensors);
 
         Microbe microbe = new Microbe(x, y, worldRef, sensors, connectors);
         return microbe;
@@ -56,20 +68,24 @@ public class MicrobeBuilder {
     private Sensor[] buildSensorList(String sensorDNA) {
         Sensor[] sensors = new Sensor[8];
 
-        for (int i = 0; i < 16; i += 2) {
+        for (int i = 0; i < 8; i += 2) {
             String chromosome = sensorDNA.substring(i, i+2);
             switch (binaryStringToInt(chromosome)){
                 case 0:
                     sensors[i/2] = null;
+                    sensors[7-(i/2)] = null;
                     break;
                 case 1:
                     sensors[i/2] = new LightSensor(worldRef.getMicrobeSize() / 5);
+                    sensors[7-(i/2)] = new LightSensor(worldRef.getMicrobeSize() / 5);
                     break;
                 case 2:
                     sensors[i/2] = new HeatSensor(worldRef.getMicrobeSize() / 5);
+                    sensors[7-(i/2)] = new HeatSensor(worldRef.getMicrobeSize() / 5);
                     break;
                 case 3:
                     sensors[i/2] = new ScentSensor(worldRef.getMicrobeSize() / 5);
+                    sensors[7-(i/2)] = new ScentSensor(worldRef.getMicrobeSize() / 5);
                     break;
             }
         }
@@ -77,20 +93,25 @@ public class MicrobeBuilder {
         return sensors;
     }
 
-    private ArrayList<Connector> buildConnectorList(String connectorDNA, String connectorConfigDNA, Sensor[] sensors) {
+    private ArrayList<Connector> buildConnectorList(String connectorActivationDNA, String connectorCrossoverDNA, String connectorConfigDNA, Sensor[] sensors) {
         ArrayList<Connector> connectors = new ArrayList<>();
 
-        // For each connector
-            // If the sensor in position floor(i/2) is not null
-            // Connect to left if i mod 2 == 0
-            // Connect to right if not
-        for (int i = 0; i < 16; i++) {
-            if (connectorDNA.charAt(i) == '1') {
-                if (sensors[i/2] != null){
-                    String chromosome = connectorConfigDNA.substring(i*2, (i*2)+2);
-                    Motor motor = (i % 2 == 0) ? Motor.LEFT : Motor.RIGHT;
-                    Transferance transferance = (binaryStringToInt(chromosome) % 2 == 0) ? Transferance.DRIVE : Transferance.INHIBIT;
-                    connectors.add(new Connector(sensors[i/2], motor, transferance));
+        // For each pair of connectors
+        for (int i = 0; i < 8; i+=2) {
+            String activationChromosome = connectorActivationDNA.substring(i, i+2);
+            // If the sensors are live and the connectors are activated
+            if (sensors[i/2] != null && binaryStringToInt(activationChromosome) % 2 != 0) {
+                String crossoverChromosome = connectorCrossoverDNA.substring(i, i+2);
+                String configChromosome = connectorConfigDNA.substring(i, i+2);
+                boolean crossover = (binaryStringToInt(crossoverChromosome) % 2 != 0);
+                Transferance transferance = (binaryStringToInt(configChromosome) % 2 != 0) ? Transferance.INHIBIT : Transferance.DRIVE;
+                if (crossover){
+                    connectors.add(new Connector(sensors[i/2], Motor.LEFT, transferance));
+                    connectors.add(new Connector(sensors[7-(i/2)], Motor.RIGHT, transferance));
+                }
+                else {
+                    connectors.add(new Connector(sensors[i/2], Motor.RIGHT, transferance));
+                    connectors.add(new Connector(sensors[7-(i/2)], Motor.LEFT, transferance));
                 }
             }
         }

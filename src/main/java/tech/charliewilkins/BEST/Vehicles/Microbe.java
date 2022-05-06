@@ -52,7 +52,7 @@ public class Microbe {
 
         // Microbe
         this.diameter = worldRef.getMicrobeSize();
-        this.health = 500;
+        this.health = 1000;
 
         // Coordinates
         this.x = x;
@@ -118,8 +118,8 @@ public class Microbe {
         for (int i = 0; i < 8; i++){
             if (sensors[i] != null){
                 // We want the sensors arranged in a circle, at 22.5 degree angles around the perimeter of the microbe
-                int sx = x + (int) ((diameter/2)*Math.cos(theta + (Math.toRadians(45 * i))));
-                int sy = y + (int) ((diameter/2)*Math.sin(theta + (Math.toRadians(45 * i))));
+                int sx = x + (int) ((diameter/2)*Math.cos(theta + (Math.toRadians((45 * i)+22.5))));
+                int sy = y + (int) ((diameter/2)*Math.sin(theta + (Math.toRadians((45 * i)+22.5))));
                 sensors[i].setCoords(sx, sy);
                 sensors[i].draw(g);
             }
