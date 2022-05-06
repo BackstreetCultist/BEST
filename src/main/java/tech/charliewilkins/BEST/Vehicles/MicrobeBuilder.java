@@ -16,8 +16,29 @@ public class MicrobeBuilder {
         this.worldRef = worldRef;
     }
 
-    // DNA for Hate: 0001000000000001001000000000000100000000000000000000000000000000
-    // DNA for Fear: 0001000000000001000100000000001000000000000000000000000000000000
+    // DNA for Agression:
+    // 00 01 00 00 00 00 00 01
+    // 0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  1
+    // 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+    // 0001000000000001001000000000000100000000000000000000000000000000
+
+    // DNA for Fear:
+    // 00 01 00 00 00 00 00 01
+    // 0  0  0  1  0  0  0  0  0  0  0  0  0  0  1  0
+    // 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+    // 0001000000000001000100000000001000000000000000000000000000000000
+
+    // DNA for Love:
+    // 00 01 00 00 00 00 00 01
+    // 0  0  0  1  0  0  0  0  0  0  0  0  0  0  1  0
+    // 00 00 00 01 00 00 00 00 00 00 00 00 00 00 01 00
+    // 0001000000000001000100000000001000000001000000000000000000000100
+
+    // DNA for Exploration:
+    // 00 01 00 00 00 00 00 01
+    // 0  0  1  0  0  0  0  0  0  0  0  0  0  0  0  1
+    // 00 00 01 00 00 00 00 00 00 00 00 00 00 00 00 01
+    // 0001000000000001001000000000000100000100000000000000000000000001
     public Microbe build(int x, int y, String genome) {
         String sensorDNA = genome.substring(0,16);
         String connectorDNA = genome.substring(16,32);
@@ -64,9 +85,11 @@ public class MicrobeBuilder {
         for (int i = 0; i < 16; i++) {
             if (connectorDNA.charAt(i) == '1') {
                 if (sensors[i/2] != null){
-                    // TODO configure connector rather than just making DRIVE
-                    Connector connector = (i % 2 == 0) ? new Connector(sensors[i/2], Motor.LEFT, Transferance.DRIVE) : new Connector(sensors[i/2], Motor.RIGHT, Transferance.DRIVE);
-                    connectors.add(connector);
+                    String chromosome = connectorConfigDNA.substring(i*2, (i*2)+2);
+                    System.out.println(chromosome);
+                    Motor motor = (i % 2 == 0) ? Motor.LEFT : Motor.RIGHT;
+                    Transferance transferance = (binaryStringToInt(chromosome) % 2 == 0) ? Transferance.DRIVE : Transferance.INHIBIT;
+                    connectors.add(new Connector(sensors[i/2], motor, transferance));
                 }
             }
         }

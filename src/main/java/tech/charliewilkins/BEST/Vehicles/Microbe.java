@@ -14,7 +14,6 @@ import org.ejml.simple.SimpleMatrix;
 import tech.charliewilkins.BEST.Vehicles.Sensors.Connector;
 import tech.charliewilkins.BEST.Vehicles.Sensors.Sensor;
 import tech.charliewilkins.BEST.Vehicles.Sensors.Connector.Motor;
-import tech.charliewilkins.BEST.Vehicles.Sensors.Connector.Transferance;
 import tech.charliewilkins.BEST.World.World;
 
 import java.util.ArrayList;
