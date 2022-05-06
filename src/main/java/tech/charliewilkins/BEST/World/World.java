@@ -40,10 +40,6 @@ public class World extends JPanel implements Runnable {
         microbesToDelete = new ArrayList<>();
         builder = new MicrobeBuilder(this);
 
-        // Create a LightSource at 50-(n-50)
-        l = new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50);
-        sources.add(l);
-
         initWorld();
     }
 
@@ -68,7 +64,10 @@ public class World extends JPanel implements Runnable {
             microbe.draw(g);
         }
         
-        l.draw(g);
+        for (Source source : sources) {
+            source.draw(g);
+        }
+
         Toolkit.getDefaultToolkit().sync();
     }
 
@@ -110,6 +109,10 @@ public class World extends JPanel implements Runnable {
         long beforeTime, timeDiff, sleep;
         beforeTime = System.currentTimeMillis();
 
+        // Sources
+        sources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+
+        // Microbes
         microbes.add(builder.build(INITIAL_X, INITIAL_Y, "0001000000000001001000000000000100000000000000000000000000000000")); //HATE
         microbes.add(builder.build(INITIAL_X+100, INITIAL_Y+100, "0001000000000001000100000000001000000000000000000000000000000000")); //FEAR
 
