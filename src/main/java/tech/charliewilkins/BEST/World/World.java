@@ -12,7 +12,9 @@ import javax.swing.JPanel;
 
 import tech.charliewilkins.BEST.Vehicles.Microbe;
 import tech.charliewilkins.BEST.Vehicles.MicrobeBuilder;
+import tech.charliewilkins.BEST.World.Sources.HeatSource;
 import tech.charliewilkins.BEST.World.Sources.LightSource;
+import tech.charliewilkins.BEST.World.Sources.ScentSource;
 import tech.charliewilkins.BEST.World.Sources.Source;
 
 public class World extends JPanel implements Runnable {
@@ -110,6 +112,11 @@ public class World extends JPanel implements Runnable {
 
         // Sources
         sources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+        sources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+        sources.add(new HeatSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+        sources.add(new HeatSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+        sources.add(new ScentSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+        sources.add(new ScentSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
 
         // Microbes
         microbes.add(builder.build(INITIAL_X, INITIAL_Y, Evolve.generateGenome(rng)));

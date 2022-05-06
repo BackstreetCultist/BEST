@@ -8,8 +8,8 @@ import java.awt.geom.Ellipse2D;
 
 public class Source {
     // Coordinates
-    protected final int x;
-    protected final int y;
+    protected int x;
+    protected int y;
 
     protected final int diameter;
     protected final Color color;
@@ -38,6 +38,11 @@ public class Source {
         g2d.fill(circle);
         g2d.setPaint(Color.BLACK);
         g2d.draw(circle);
+    }
+
+    public void setCoords(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     public int getX() {

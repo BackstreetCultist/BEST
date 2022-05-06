@@ -34,8 +34,8 @@ public class Microbe {
     private double vl;
     private double vr;
     private double theta;
-    private final double MIN_SPEED = 1.0;
-    private final double CRUISE_SPEED = 3.0;
+    private final double MIN_SPEED = 2.0;
+    private final double CRUISE_SPEED = 5.0;
     private final double MAX_SPEED = 20.0;
 
     // Other
@@ -81,7 +81,7 @@ public class Microbe {
         double circleX = x - diameter / 2.0; // As Ellipse2D takes upper left co-ord
         double circleY = y - diameter / 2.0;
         Ellipse2D.Double circle = new Ellipse2D.Double(circleX,circleY,diameter,diameter);
-        g2d.setPaint(Color.RED);
+        g2d.setPaint(Color.LIGHT_GRAY);
         g2d.fill(circle);
         g2d.setPaint(Color.BLACK);
         g2d.draw(circle);

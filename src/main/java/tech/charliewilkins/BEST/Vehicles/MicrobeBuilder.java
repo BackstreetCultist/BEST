@@ -3,7 +3,9 @@ package tech.charliewilkins.BEST.Vehicles;
 import java.util.ArrayList;
 
 import tech.charliewilkins.BEST.Vehicles.Sensors.Connector;
+import tech.charliewilkins.BEST.Vehicles.Sensors.HeatSensor;
 import tech.charliewilkins.BEST.Vehicles.Sensors.LightSensor;
+import tech.charliewilkins.BEST.Vehicles.Sensors.ScentSensor;
 import tech.charliewilkins.BEST.Vehicles.Sensors.Sensor;
 import tech.charliewilkins.BEST.Vehicles.Sensors.Connector.Motor;
 import tech.charliewilkins.BEST.Vehicles.Sensors.Connector.Transferance;
@@ -64,10 +66,10 @@ public class MicrobeBuilder {
                     sensors[i/2] = new LightSensor(worldRef.getMicrobeSize() / 5);
                     break;
                 case 2:
-                    sensors[i/2] = null;
+                    sensors[i/2] = new HeatSensor(worldRef.getMicrobeSize() / 5);
                     break;
                 case 3:
-                    sensors[i/2] = null;
+                    sensors[i/2] = new ScentSensor(worldRef.getMicrobeSize() / 5);
                     break;
             }
         }
@@ -86,7 +88,6 @@ public class MicrobeBuilder {
             if (connectorDNA.charAt(i) == '1') {
                 if (sensors[i/2] != null){
                     String chromosome = connectorConfigDNA.substring(i*2, (i*2)+2);
-                    System.out.println(chromosome);
                     Motor motor = (i % 2 == 0) ? Motor.LEFT : Motor.RIGHT;
                     Transferance transferance = (binaryStringToInt(chromosome) % 2 == 0) ? Transferance.DRIVE : Transferance.INHIBIT;
                     connectors.add(new Connector(sensors[i/2], motor, transferance));
