@@ -34,9 +34,9 @@ public class Microbe {
     private double vl;
     private double vr;
     private double theta;
-    private final int MIN_SPEED = 1;
-    private final int CRUISE_SPEED = 3;
-    private final int MAX_SPEED = 20;
+    private final double MIN_SPEED = 1.0;
+    private final double CRUISE_SPEED = 3.0;
+    private final double MAX_SPEED = 20.0;
 
     // Other
     // SO it has eight sensor positions,

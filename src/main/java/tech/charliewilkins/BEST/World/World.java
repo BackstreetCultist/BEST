@@ -112,8 +112,8 @@ public class World extends JPanel implements Runnable {
         sources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
 
         // Microbes
-        microbes.add(builder.build(INITIAL_X, INITIAL_Y, "0001000000000001001000000000000100000000000000000000000000000000")); //HATE
-        microbes.add(builder.build(INITIAL_X+100, INITIAL_Y+100, "0001000000000001000100000000001000000000000000000000000000000000")); //FEAR
+        microbes.add(builder.build(INITIAL_X, INITIAL_Y, Evolve.generateGenome(rng)));
+        microbes.add(builder.build(INITIAL_X+100, INITIAL_Y+100, Evolve.generateGenome(rng)));
 
         while (true) {
             cycle();
@@ -136,6 +136,18 @@ public class World extends JPanel implements Runnable {
             }
             
             beforeTime = System.currentTimeMillis();
+        }
+    }
+
+    public static class Evolve {
+        public static String generateGenome(Random rng) {
+            char[] genome = new char[64];
+
+            for (int i = 0; i < 64; i++) {
+                genome[i] = (rng.nextInt() % 2 == 0) ? '0' : '1';
+            }
+
+            return new String(genome);
         }
     }
 }
