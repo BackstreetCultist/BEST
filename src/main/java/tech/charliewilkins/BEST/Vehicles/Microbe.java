@@ -164,10 +164,10 @@ public class Microbe {
 
         for (Connector connector: connectors) {
             if (connector.getMotor() == Motor.LEFT) {
-                vl += (connector.getTransferance() == Transferance.ATTRACT) ? connector.getSensor().sense(worldRef.getSources()) : -connector.getSensor().sense(worldRef.getSources());
+                vl += connector.activate(worldRef.getSources());
             }
             else {
-                vr += (connector.getTransferance() == Transferance.ATTRACT) ? connector.getSensor().sense(worldRef.getSources()) : -connector.getSensor().sense(worldRef.getSources());
+                vr += connector.activate(worldRef.getSources());
             }
         }
 

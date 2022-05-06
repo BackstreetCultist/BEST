@@ -64,8 +64,8 @@ public class MicrobeBuilder {
         for (int i = 0; i < 16; i++) {
             if (connectorDNA.charAt(i) == '1') {
                 if (sensors[i/2] != null){
-                    // TODO configure connector rather than just making ATTRACT
-                    Connector connector = (i % 2 == 0) ? new Connector(sensors[i/2], Motor.LEFT, Transferance.ATTRACT) : new Connector(sensors[i/2], Motor.RIGHT, Transferance.ATTRACT);
+                    // TODO configure connector rather than just making DRIVE
+                    Connector connector = (i % 2 == 0) ? new Connector(sensors[i/2], Motor.LEFT, Transferance.DRIVE) : new Connector(sensors[i/2], Motor.RIGHT, Transferance.DRIVE);
                     connectors.add(connector);
                 }
             }

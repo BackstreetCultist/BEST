@@ -4,14 +4,17 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
+import java.util.ArrayList;
+
+import tech.charliewilkins.BEST.World.Sources.Source;
 
 // A connector connects a sensor to a motor
 // Its effect can be excitative, depressive, ...
 // Thus each connector has a target sensor, a target motor and an effect
 public class Connector {
     public enum Transferance {
-        ATTRACT,
-        REPEL
+        DRIVE,
+        INHIBIT
     }
 
     public enum Motor {
@@ -27,6 +30,22 @@ public class Connector {
         this.targetSensor = targetSensor;
         this.targetMotor = targetMotor;
         this.transferance = transferance;
+    }
+
+    public double activate(ArrayList<Source> sources) {
+        double velocity = 0;
+
+        switch(transferance) {
+            case DRIVE:
+                velocity = targetSensor.sense(sources);
+                break;
+
+            case INHIBIT:
+                velocity = -targetSensor.sense(sources);
+                break;
+        }
+
+        return velocity;
     }
 
     public void draw(Graphics g, int microbeX, int microbeY, double microbeTheta, int microbeDiameter){
@@ -47,7 +66,7 @@ public class Connector {
 
         Line2D la = new Line2D.Double();
         la.setLine(targetSensor.getX(),targetSensor.getY(),mx,my);
-        if (this.transferance == Transferance.ATTRACT) {
+        if (this.transferance == Transferance.DRIVE) {
             g2d.setPaint(Color.GREEN);
         }
         else {
