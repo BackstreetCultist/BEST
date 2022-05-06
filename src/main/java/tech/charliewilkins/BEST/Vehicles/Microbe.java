@@ -12,7 +12,6 @@ import java.awt.geom.Rectangle2D;
 import org.ejml.simple.SimpleMatrix;
 
 import tech.charliewilkins.BEST.Vehicles.Sensors.Connector;
-import tech.charliewilkins.BEST.Vehicles.Sensors.LightSensor;
 import tech.charliewilkins.BEST.Vehicles.Sensors.Sensor;
 import tech.charliewilkins.BEST.Vehicles.Sensors.Connector.Motor;
 import tech.charliewilkins.BEST.Vehicles.Sensors.Connector.Transferance;
@@ -47,12 +46,12 @@ public class Microbe {
     private Random rnd;
     // SO it has eight sensor positions,
     // with 0 being 'dead ahead' e.g where the line terminates
-    private Sensor[] sensors = new Sensor[8];
+    private final Sensor[] sensors;
     // It also has a variable number of connectors
-    private ArrayList<Connector> connectors;
+    private final ArrayList<Connector> connectors;
     Font font;
 
-    public Microbe(int x, int y, World worldRef) {
+    public Microbe(int x, int y, World worldRef, Sensor[] sensors, ArrayList<Connector> connectors) {
         // World
         this.worldRef = worldRef;
 
@@ -76,15 +75,9 @@ public class Microbe {
 
         // Other
         this.rnd = new Random();
-        connectors = new ArrayList<>();
+        this.sensors = sensors;
+        this.connectors = connectors;
         font = new Font("Serif", Font.PLAIN, 11);
-
-        //TODO this is just for test
-        sensors[1] = new LightSensor(0, 0, diameter / 5);
-        sensors[7] = new LightSensor(0, 0, diameter / 5);
-
-        connectors.add(new Connector(sensors[1], Motor.LEFT, Transferance.ATTRACT));
-        connectors.add(new Connector(sensors[7], Motor.RIGHT, Transferance.ATTRACT));
     }
 
     public void draw(Graphics g) {
@@ -259,10 +252,6 @@ public class Microbe {
     }
 
     private void randomMove(){
-        // Default movement - move up to 5 in each direction
-        // x += (rnd.nextInt(11)-5);
-        // y += (rnd.nextInt(11)-5);
-        
         // Swap behaviours if limit elapsed
         if (randomCount == randomLimit) {
             randomCount = 0;
@@ -280,10 +269,5 @@ public class Microbe {
             vl = 2;
         }
         randomCount++;
-    }
-
-    public void setCoords(int x, int y){
-        this.x = x;
-        this.y = y;
     }
 }

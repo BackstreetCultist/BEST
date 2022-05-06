@@ -97,12 +97,6 @@ public class World extends JPanel implements Runnable {
     }
 
     private void cycle() {
-        // Create microbes if not enough - TODO for testing
-        if (microbes.size() < 2) {
-            microbes.add(builder.build(INITIAL_X, INITIAL_Y, ""));
-            microbes.add(builder.build(INITIAL_X+100, INITIAL_Y+100, ""));
-        }
-
         for (Microbe microbe: microbes){
             microbe.step();
         }
@@ -116,9 +110,8 @@ public class World extends JPanel implements Runnable {
         long beforeTime, timeDiff, sleep;
         beforeTime = System.currentTimeMillis();
 
-        //TODO for test
-        microbes.add(builder.build(INITIAL_X, INITIAL_Y, ""));
-        microbes.add(builder.build(INITIAL_X+100, INITIAL_Y+100, ""));
+        microbes.add(builder.build(INITIAL_X, INITIAL_Y, "0001000000000001001000000000000100000000000000000000000000000000")); //HATE
+        microbes.add(builder.build(INITIAL_X+100, INITIAL_Y+100, "0001000000000001000100000000001000000000000000000000000000000000")); //FEAR
 
         while (true) {
             cycle();

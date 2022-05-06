@@ -14,9 +14,9 @@ public class Sensor {
     protected final int size;
     protected final Color color;
 
-    public Sensor(int x, int y, int size, Color color) {
-        this.x = x;
-        this.y = y;
+    public Sensor(int size, Color color) {
+        this.x = 0;
+        this.y = 0;
         this.size = size;
         this.color = color;
     }
