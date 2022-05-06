@@ -18,7 +18,6 @@ import tech.charliewilkins.BEST.Vehicles.Sensors.Connector.Transferance;
 import tech.charliewilkins.BEST.World.World;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Microbe {
     // World
@@ -36,14 +35,11 @@ public class Microbe {
     private double vl;
     private double vr;
     private double theta;
-
-    // Random walk
-    private Boolean randomTurning;
-    private int randomCount;
-    private int randomLimit;
+    private final int MIN_SPEED = 1;
+    private final int CRUISE_SPEED = 3;
+    private final int MAX_SPEED = 20;
 
     // Other
-    private Random rnd;
     // SO it has eight sensor positions,
     // with 0 being 'dead ahead' e.g where the line terminates
     private final Sensor[] sensors;
@@ -68,13 +64,7 @@ public class Microbe {
         this.vr = 0;
         this.theta = 0.0;
 
-        //Random walk
-        this.randomTurning = true;
-        this.randomCount = 0;
-        this.randomLimit = 0;
-
         // Other
-        this.rnd = new Random();
         this.sensors = sensors;
         this.connectors = connectors;
         font = new Font("Serif", Font.PLAIN, 11);
@@ -168,8 +158,9 @@ public class Microbe {
 
     // Sets vl and vr
     public void transferFunction() {
-        vl = 0;
-        vr = 0;
+        // Set us back to cruising speed
+        vl = CRUISE_SPEED;
+        vr = CRUISE_SPEED;
 
         for (Connector connector: connectors) {
             if (connector.getMotor() == Motor.LEFT) {
@@ -181,13 +172,12 @@ public class Microbe {
         }
 
         // Minimum speed
-        if (vl < 2 && vr < 2) {
-            randomMove();
-        }
+        vl = (vl < MIN_SPEED) ? MIN_SPEED : vl;
+        vr = (vr < MIN_SPEED) ? MIN_SPEED : vr;
 
         // Maximum speed
-        vl = (vl > 20) ? 20 : vl;
-        vr = (vr > 20) ? 20 : vr;
+        vl = (vl > MAX_SPEED) ? MAX_SPEED : vl;
+        vr = (vr > MAX_SPEED) ? MAX_SPEED : vr;
 
         vl = vl * worldRef.getSimSpeed();
         vr = vr * worldRef.getSimSpeed();
@@ -249,25 +239,5 @@ public class Microbe {
             x += (int) (vr*Math.cos(theta));
             y += (int) (vr*Math.sin(theta));
         }
-    }
-
-    private void randomMove(){
-        // Swap behaviours if limit elapsed
-        if (randomCount == randomLimit) {
-            randomCount = 0;
-            randomLimit = 1+rnd.nextInt(50);
-            randomTurning = (randomTurning) ? false : true;
-        }
-
-        //Set values
-        if (randomTurning) {
-            vr = 1;
-            vl = -1;
-        }
-        else {
-            vr = 2;
-            vl = 2;
-        }
-        randomCount++;
     }
 }
