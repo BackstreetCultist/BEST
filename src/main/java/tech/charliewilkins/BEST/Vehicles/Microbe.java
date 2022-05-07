@@ -20,6 +20,7 @@ import tech.charliewilkins.BEST.World.Sources.ScentSource;
 import tech.charliewilkins.BEST.World.Sources.Source;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Microbe {
     // World
@@ -55,6 +56,7 @@ public class Microbe {
     // It also has a variable number of connectors
     private final ArrayList<Connector> connectors;
     Font font;
+    Random rng;
 
     public Microbe(int x, int y, World worldRef, Sensor[] sensors, ArrayList<Connector> connectors, String dna) {
         // World
@@ -84,6 +86,7 @@ public class Microbe {
         this.sensors = sensors;
         this.connectors = connectors;
         font = new Font("Serif", Font.PLAIN, 11);
+        rng = new Random();
     }
 
     public void draw(Graphics g) {
@@ -290,7 +293,7 @@ public class Microbe {
                 // If threshold reached, call to reproduce
                 // Return
                 if (reproductionCount >= reproductionThreshold){
-                    worldRef.reproduce(dna, reproductionCandidate.getDNA());
+                    worldRef.reproduce(dna, reproductionCandidate.getDNA(), x+(diameter*(rng.nextInt(10)-5)), y+(diameter*(rng.nextInt(10)-5)));
                     reproductionCount = 0;
                     reproductionCandidate = null;
                     return;

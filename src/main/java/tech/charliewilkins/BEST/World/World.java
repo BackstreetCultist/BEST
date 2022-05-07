@@ -25,6 +25,7 @@ public class World extends JPanel implements Runnable {
     private final int DELAY = 25;
     private final int SIMULATION_SPEED = 1;
     private final int MICROBE_SIZE = 30;
+    private final int MAX_MICROBES = 10;
 
     private Thread animator;
     private Random rng;
@@ -32,6 +33,7 @@ public class World extends JPanel implements Runnable {
 
     private ArrayList<Microbe> microbes;
     private ArrayList<Microbe> microbesToDelete;
+    private ArrayList<Microbe> microbesToAdd;
     MicrobeBuilder builder;
 
     public World() {
@@ -39,6 +41,7 @@ public class World extends JPanel implements Runnable {
         worldSources = new ArrayList<>();
         microbes = new ArrayList<>();
         microbesToDelete = new ArrayList<>();
+        microbesToAdd = new ArrayList<>();
         builder = new MicrobeBuilder(this);
 
         initWorld();
@@ -109,6 +112,24 @@ public class World extends JPanel implements Runnable {
 
         // Delete microbes that have died
         microbes.removeAll(microbesToDelete);
+        microbesToDelete = new ArrayList<>();
+
+        // Add new microbes
+        // Note: doesn't like to use addAll()
+        // int i = 0;
+        // while (microbes.size() <= MAX_MICROBES) {
+        //     // System.out.println(microbesToAdd.size());
+        //     if (microbesToAdd != null && i < microbesToAdd.size()) {
+        //         microbes.add(microbesToAdd.get(i));
+        //     }
+        //     i++;
+        // }
+        for (Microbe microbe : microbesToAdd){
+            if (microbes.size() < MAX_MICROBES) {
+                microbes.add(microbe);
+            }
+        }
+        microbesToAdd = new ArrayList<>();
     }
 
     @Override
@@ -152,10 +173,9 @@ public class World extends JPanel implements Runnable {
         }
     }
 
-    public void reproduce(String dna, String dna2) {
-        String newGenome = Evolve.evolve(dna, dna2);
-        //TODO
-        System.out.println("New Genome: " + newGenome);
+    public void reproduce(String dna, String dna2, int x, int y) {
+        String newGenome = Evolve.evolve(dna, dna2, rng);
+        microbesToAdd.add(builder.build(x, y, newGenome));
     }
 
     public ArrayList<Microbe> getMicrobes() {
@@ -173,9 +193,24 @@ public class World extends JPanel implements Runnable {
             return new String(genome);
         }
 
-        public static String evolve(String dna, String dna2){
-            //TODO
-            return "";
+        public static String evolve(String dna, String dna2, Random rng) {
+            return kPointCrossover(dna, dna2, 4, rng);
+        }
+
+        public static String kPointCrossover(String a, String b, int k, Random rng) {
+            String[] newGen = {a,b};
+            for (int i = 0; i < k; i++) {
+                newGen = onePointCrossover(newGen[0], newGen[1], rng);
+            }
+            return newGen[0];
+        }
+
+        public static String[] onePointCrossover(String a, String b, Random rng) {
+            String[] newGen = {a,b};
+            int index = rng.nextInt(a.length());
+            newGen[0] = a.substring(0, index) + b.substring(index, b.length());
+            newGen[1] = b.substring(0, index) + a.substring(index, b.length());
+            return newGen;
         }
     }
 }
