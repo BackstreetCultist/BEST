@@ -126,7 +126,7 @@ public class World extends JPanel implements Runnable {
 
         // Microbes
         microbes.add(builder.build(INITIAL_X, INITIAL_Y, Evolve.generateGenome(rng)));
-        microbes.add(builder.build(INITIAL_X+100, INITIAL_Y+100, Evolve.generateGenome(rng)));
+        microbes.add(builder.build(INITIAL_X, INITIAL_Y, Evolve.generateGenome(rng)));
 
         while (true) {
             cycle();
@@ -152,6 +152,16 @@ public class World extends JPanel implements Runnable {
         }
     }
 
+    public void reproduce(String dna, String dna2) {
+        String newGenome = Evolve.evolve(dna, dna2);
+        //TODO
+        System.out.println("New Genome: " + newGenome);
+    }
+
+    public ArrayList<Microbe> getMicrobes() {
+        return microbes;
+    }
+
     public static class Evolve {
         public static String generateGenome(Random rng) {
             char[] genome = new char[64];
@@ -161,6 +171,11 @@ public class World extends JPanel implements Runnable {
             }
 
             return new String(genome);
+        }
+
+        public static String evolve(String dna, String dna2){
+            //TODO
+            return "";
         }
     }
 }

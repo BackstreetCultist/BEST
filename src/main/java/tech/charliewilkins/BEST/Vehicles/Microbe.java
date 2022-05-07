@@ -26,7 +26,6 @@ public class Microbe {
     private World worldRef; // Need a ref to the world it exists in
 
     // Microbe
-    private final String dna;
     private int diameter;
     private int health;
     private ScentSource scent;
@@ -43,6 +42,12 @@ public class Microbe {
     private final double CRUISE_SPEED = 5.0;
     private final double MAX_SPEED = 20.0;
 
+    // Reproduction
+    private final String dna;
+    private Microbe reproductionCandidate;
+    private int reproductionCount;
+    private final int reproductionThreshold;
+
     // Other
     // SO it has eight sensor positions,
     // with 0 being 'dead ahead' e.g where the line terminates
@@ -56,7 +61,6 @@ public class Microbe {
         this.worldRef = worldRef;
 
         // Microbe
-        this.dna = dna;
         this.diameter = worldRef.getMicrobeSize();
         this.health = 1000;
         scent = new ScentSource(x,y);
@@ -69,6 +73,12 @@ public class Microbe {
         this.vl = 0;
         this.vr = 0;
         this.theta = 0.0;
+
+        // Reproduction
+        this.dna = dna;
+        this.reproductionCandidate = null;
+        this.reproductionCount = 0;
+        this.reproductionThreshold = 10;
 
         // Other
         this.sensors = sensors;
@@ -163,6 +173,9 @@ public class Microbe {
         if (health <= 0) {
             worldRef.killMicrobe(this);
         }
+
+        // Attempt to reproduce
+        reproduce(worldRef.getMicrobes());
     }
 
     // Sets vl and vr
@@ -259,6 +272,58 @@ public class Microbe {
                 }
             }
         }
+    }
+
+    // Theoretically, both microbes should "mate" with each other,
+    // So this all happens twice and we get two children
+    public void reproduce(ArrayList<Microbe> microbes) {
+        ArrayList<Microbe> candidates = new ArrayList<>(microbes);
+        candidates.remove(this); //Can't mate with ourselves
+
+        // If mating is in progress
+        if (this.reproductionCandidate != null) {
+            // Check candidate still in range
+            double targetDistance = Math.sqrt(((x-reproductionCandidate.getX())*(x-reproductionCandidate.getX()))+((y-reproductionCandidate.getY())*(y-reproductionCandidate.getY())));
+            if (targetDistance <= diameter) {
+                // If so, add one
+                reproductionCount++;
+                // If threshold reached, call to reproduce
+                // Return
+                if (reproductionCount >= reproductionThreshold){
+                    worldRef.reproduce(dna, reproductionCandidate.getDNA());
+                    reproductionCount = 0;
+                    reproductionCandidate = null;
+                    return;
+                }
+                // Otherwise, return
+                return;
+            }
+            //Else, reset counters and look for a new mate
+            else {
+                reproductionCount = 0;
+                reproductionCandidate = null;
+            }
+        }
+
+        // Otherwise, look for a new mate
+        for (Microbe candidate : candidates) {
+            double candidateDistance = Math.sqrt(((x-candidate.getX())*(x-candidate.getX()))+((y-candidate.getY())*(y-candidate.getY())));
+            
+            // If we are close enough to this candidate, begin mating
+            if (candidateDistance <= diameter) {
+                reproductionCandidate = candidate;
+                reproductionCount++;
+                // Return - we can only mate with one microbe at once
+            }
+        }
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
     
     public Source getScent() {
