@@ -79,15 +79,15 @@ public class Microbe {
         this.vl = 0;
         this.vr = 0;
         this.theta = (rng.nextDouble() * 6);
-        this.MIN_SPEED = 2.0;
-        this.CRUISE_SPEED = 5.0;
+        this.MIN_SPEED = 5.0;
+        this.CRUISE_SPEED = 10.0;
         this.MAX_SPEED = 20.0;
 
         // Reproduction
         this.dna = dna;
         this.reproductionCandidate = null;
         this.reproductionCount = 0;
-        this.reproductionThreshold = 5;
+        this.reproductionThreshold = 2;
         this.reproductionCooldown = 0;
         this.reproductionMaxCountdown = 50;
         this.reproductionHealthCost = 50;

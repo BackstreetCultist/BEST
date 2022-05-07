@@ -23,7 +23,7 @@ public class World extends JPanel implements Runnable {
     private final int DELAY = 25;
     private final int SIMULATION_SPEED = 1;
     private final int MICROBE_SIZE = 30;
-    private final int MAX_MICROBES = 20;
+    private final int MAX_MICROBES = 16;
 
     private Thread animator;
     private Random rng;
@@ -128,29 +128,28 @@ public class World extends JPanel implements Runnable {
         beforeTime = System.currentTimeMillis();
 
         // Sources
-        worldSources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
-        worldSources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
-        worldSources.add(new HeatSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
-        worldSources.add(new HeatSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
-        worldSources.add(new ScentSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
-        worldSources.add(new ScentSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
-        worldSources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
-        worldSources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
-        worldSources.add(new HeatSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
-        worldSources.add(new HeatSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
-        worldSources.add(new ScentSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
-        worldSources.add(new ScentSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+        for (int i = 0; i < 16; i++) {
+            int k = rng.nextInt(4);
+            switch(k) {
+                case 0:
+                    worldSources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+                    break;
+                case 1:
+                    worldSources.add(new HeatSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+                    break;
+                case 2:
+                    worldSources.add(new ScentSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+                    break;
+                default:
+                    break;
+            }
+        }
 
         // Microbes
-        microbes.add(builder.build(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50, Evolve.generateGenome(rng)));
-        microbes.add(builder.build(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50, Evolve.generateGenome(rng)));
-        microbes.add(builder.build(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50, Evolve.generateGenome(rng)));
-        microbes.add(builder.build(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50, Evolve.generateGenome(rng)));
-        microbes.add(builder.build(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50, Evolve.generateGenome(rng)));
-        microbes.add(builder.build(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50, Evolve.generateGenome(rng)));
-        microbes.add(builder.build(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50, Evolve.generateGenome(rng)));
-        microbes.add(builder.build(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50, Evolve.generateGenome(rng)));
-
+        for (int i = 0; i < MAX_MICROBES; i++) {
+            microbes.add(builder.build(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50, Evolve.generateGenome(rng)));
+        }
+        
         while (true) {
             cycle();
             repaint();
