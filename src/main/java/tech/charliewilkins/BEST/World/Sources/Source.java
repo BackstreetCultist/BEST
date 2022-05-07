@@ -52,4 +52,8 @@ public class Source {
     public int getY() {
         return y;
     }
+
+    public int getDiameter() {
+        return diameter;
+    }
 }

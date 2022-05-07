@@ -15,6 +15,7 @@ import tech.charliewilkins.BEST.Vehicles.Sensors.Connector;
 import tech.charliewilkins.BEST.Vehicles.Sensors.Sensor;
 import tech.charliewilkins.BEST.Vehicles.Sensors.Connector.Motor;
 import tech.charliewilkins.BEST.World.World;
+import tech.charliewilkins.BEST.World.Sources.HeatSource;
 import tech.charliewilkins.BEST.World.Sources.ScentSource;
 import tech.charliewilkins.BEST.World.Sources.Source;
 
@@ -140,7 +141,7 @@ public class Microbe {
         g2d.drawString(Integer.toString(health), Math.round(x-((diameter/2)*Math.cos(theta))), Math.round(y-((diameter/2)*Math.sin(theta))));
     }
 
-    public void step(){
+    public void step() {
         // Set microbe vl and vr
         transferFunction();
         // Set microbe x and y
@@ -151,6 +152,9 @@ public class Microbe {
         x = (x > worldRef.getWorldHeight()+20) ? 0 : x;
         y = (y < -20) ? worldRef.getWorldHeight() : y;
         x = (x < -20) ? worldRef.getWorldWidth() : x;
+
+        // Take damage from heat
+        heatDamage();
 
         // Step down health and kill if dead
         health -= worldRef.getSimSpeed();
@@ -244,6 +248,17 @@ public class Microbe {
         }
     }
 
+    public void heatDamage() {
+        for (Source source : worldRef.getSources()) {
+            if (source.getClass().equals(HeatSource.class)) {
+                double distance = Math.sqrt(((source.getX()-x)*(source.getX()-x)) + ((source.getY()-y)*(source.getY()-y)));
+                if (distance < (source.getDiameter() * 10)) {
+                    health -= (source.getDiameter() * 10) - distance;
+                }
+            }
+        }
+    }
+    
     public Source getScent() {
         scent.setCoords(x, y);
         return scent;
