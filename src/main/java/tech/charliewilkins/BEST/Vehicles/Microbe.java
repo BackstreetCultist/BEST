@@ -39,9 +39,9 @@ public class Microbe {
     private double vl;
     private double vr;
     private double theta;
-    private final double MIN_SPEED = 2.0;
-    private final double CRUISE_SPEED = 5.0;
-    private final double MAX_SPEED = 20.0;
+    private final double MIN_SPEED;
+    private final double CRUISE_SPEED;
+    private final double MAX_SPEED;
 
     // Reproduction
     private final String dna;
@@ -77,12 +77,15 @@ public class Microbe {
         this.vl = 0;
         this.vr = 0;
         this.theta = 0.0;
+        this.MIN_SPEED = 2.0;
+        this.CRUISE_SPEED = 5.0;
+        this.MAX_SPEED = 20.0;
 
         // Reproduction
         this.dna = dna;
         this.reproductionCandidate = null;
         this.reproductionCount = 0;
-        this.reproductionThreshold = 10;
+        this.reproductionThreshold = 5;
         this.reproductionCooldown = 0;
         this.reproductionHealthCost = 100;
 
