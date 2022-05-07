@@ -28,7 +28,7 @@ public class World extends JPanel implements Runnable {
 
     private Thread animator;
     private Random rng;
-    private ArrayList<Source> sources;
+    private ArrayList<Source> worldSources; // Collects sources not tied to other objects
 
     private ArrayList<Microbe> microbes;
     private ArrayList<Microbe> microbesToDelete;
@@ -36,7 +36,7 @@ public class World extends JPanel implements Runnable {
 
     public World() {
         rng = new Random();
-        sources = new ArrayList<>();
+        worldSources = new ArrayList<>();
         microbes = new ArrayList<>();
         microbesToDelete = new ArrayList<>();
         builder = new MicrobeBuilder(this);
@@ -65,7 +65,7 @@ public class World extends JPanel implements Runnable {
             microbe.draw(g);
         }
         
-        for (Source source : sources) {
+        for (Source source : worldSources) {
             source.draw(g);
         }
 
@@ -93,6 +93,12 @@ public class World extends JPanel implements Runnable {
     }
 
     public ArrayList<Source> getSources() {
+        // Need to pass the world sources plus those attached to microbes
+        ArrayList<Source> sources = new ArrayList<>();
+        sources.addAll(worldSources);
+        for (Microbe microbe : microbes) {
+            sources.add(microbe.getScent());
+        }
         return sources;
     }
 
@@ -111,12 +117,12 @@ public class World extends JPanel implements Runnable {
         beforeTime = System.currentTimeMillis();
 
         // Sources
-        sources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
-        sources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
-        sources.add(new HeatSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
-        sources.add(new HeatSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
-        sources.add(new ScentSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
-        sources.add(new ScentSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+        // worldSources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+        // worldSources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+        // worldSources.add(new HeatSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+        // worldSources.add(new HeatSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+        // worldSources.add(new ScentSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+        // worldSources.add(new ScentSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
 
         // Microbes
         microbes.add(builder.build(INITIAL_X, INITIAL_Y, Evolve.generateGenome(rng)));

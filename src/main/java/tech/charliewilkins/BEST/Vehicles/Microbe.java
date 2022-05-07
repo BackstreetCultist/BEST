@@ -15,6 +15,8 @@ import tech.charliewilkins.BEST.Vehicles.Sensors.Connector;
 import tech.charliewilkins.BEST.Vehicles.Sensors.Sensor;
 import tech.charliewilkins.BEST.Vehicles.Sensors.Connector.Motor;
 import tech.charliewilkins.BEST.World.World;
+import tech.charliewilkins.BEST.World.Sources.ScentSource;
+import tech.charliewilkins.BEST.World.Sources.Source;
 
 import java.util.ArrayList;
 
@@ -25,6 +27,7 @@ public class Microbe {
     // Microbe
     private int diameter;
     private int health;
+    private ScentSource scent;
 
     // Coordinates
     private int x;
@@ -53,6 +56,7 @@ public class Microbe {
         // Microbe
         this.diameter = worldRef.getMicrobeSize();
         this.health = 1000;
+        scent = new ScentSource(x,y);
 
         // Coordinates
         this.x = x;
@@ -238,5 +242,10 @@ public class Microbe {
             x += (int) (vr*Math.cos(theta));
             y += (int) (vr*Math.sin(theta));
         }
+    }
+
+    public Source getScent() {
+        scent.setCoords(x, y);
+        return scent;
     }
 }

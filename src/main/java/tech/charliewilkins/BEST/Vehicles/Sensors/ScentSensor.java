@@ -21,7 +21,13 @@ public class ScentSensor extends Sensor {
                 int ly = source.getY();
     
                 double distance = Math.sqrt(((lx-x)*(lx-x)) + ((ly-y)*(ly-y)));
-                light += 200000.0/(distance * distance);
+                
+                // Need to check this scent is not 'us'
+                // The size of the sensor is a fifth of the diameter of the microbe
+                // So if distance greater than radius?
+                if (distance > ((size * 5)/2)+1){
+                    light += 200000.0/(distance * distance);
+                }
             }
         }
         return light;
