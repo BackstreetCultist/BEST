@@ -20,8 +20,6 @@ import tech.charliewilkins.BEST.World.Sources.Source;
 public class World extends JPanel implements Runnable {
     private final int W_WIDTH = 1000;
     private final int W_HEIGHT = 1000;
-    private final int INITIAL_X = 100;
-    private final int INITIAL_Y = 100;
     private final int DELAY = 25;
     private final int SIMULATION_SPEED = 1;
     private final int MICROBE_SIZE = 30;
@@ -198,7 +196,23 @@ public class World extends JPanel implements Runnable {
         }
 
         public static String evolve(String dna, String dna2, Random rng) {
-            return kPointCrossover(dna, dna2, 4, rng);
+            // Mutate 1/4 of the genome on a 1/4 chance
+            if (rng.nextInt(4) == 0) {
+                return mutate(kPointCrossover(dna, dna2, 4, rng), rng);
+            }
+            else {
+                return kPointCrossover(dna, dna2, 4, rng);
+            }
+        }
+
+        public static String mutate(String genome, Random rng) {
+            char[] genomeArr = genome.toCharArray();
+            for (int i = 0; i < genome.length(); i++) {
+                if (rng.nextInt(4) == 0) {
+                    genomeArr[i] = (genomeArr[i] == '0') ? '1' : '0'; 
+                }
+            }
+            return new String(genomeArr);
         }
 
         public static String kPointCrossover(String a, String b, int k, Random rng) {
