@@ -63,6 +63,7 @@ public class Microbe {
     public Microbe(int x, int y, World worldRef, Sensor[] sensors, ArrayList<Connector> connectors, String dna) {
         // World
         this.worldRef = worldRef;
+        rng = new Random();
 
         // Microbe
         this.diameter = worldRef.getMicrobeSize();
@@ -76,7 +77,7 @@ public class Microbe {
         // Movement
         this.vl = 0;
         this.vr = 0;
-        this.theta = 0.0;
+        this.theta = (rng.nextDouble() * 6);
         this.MIN_SPEED = 2.0;
         this.CRUISE_SPEED = 5.0;
         this.MAX_SPEED = 20.0;
@@ -93,7 +94,6 @@ public class Microbe {
         this.sensors = sensors;
         this.connectors = connectors;
         font = new Font("Serif", Font.PLAIN, 11);
-        rng = new Random();
     }
 
     public void draw(Graphics g) {
