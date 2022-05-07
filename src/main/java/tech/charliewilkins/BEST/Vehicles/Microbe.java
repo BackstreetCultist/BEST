@@ -49,6 +49,7 @@ public class Microbe {
     private int reproductionCount;
     private final int reproductionThreshold;
     private int reproductionCooldown;
+    private int reproductionMaxCountdown;
     private final int reproductionHealthCost;
 
     // Other
@@ -88,7 +89,8 @@ public class Microbe {
         this.reproductionCount = 0;
         this.reproductionThreshold = 5;
         this.reproductionCooldown = 0;
-        this.reproductionHealthCost = 100;
+        this.reproductionMaxCountdown = 50;
+        this.reproductionHealthCost = 50;
 
         // Other
         this.sensors = sensors;
@@ -316,7 +318,7 @@ public class Microbe {
                     worldRef.reproduce(dna, reproductionCandidate.getDNA(), x+(diameter*(rng.nextInt(10)-5)), y+(diameter*(rng.nextInt(10)-5)));
                     reproductionCount = 0;
                     reproductionCandidate = null;
-                    reproductionCooldown = 100;
+                    reproductionCooldown = reproductionMaxCountdown;
                     health -= reproductionHealthCost;
                     return;
                 }
