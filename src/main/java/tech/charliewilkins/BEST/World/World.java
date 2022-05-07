@@ -117,12 +117,12 @@ public class World extends JPanel implements Runnable {
         beforeTime = System.currentTimeMillis();
 
         // Sources
-        // worldSources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
-        // worldSources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
-        // worldSources.add(new HeatSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
-        // worldSources.add(new HeatSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
-        // worldSources.add(new ScentSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
-        // worldSources.add(new ScentSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+        worldSources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+        worldSources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+        worldSources.add(new HeatSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+        worldSources.add(new HeatSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+        worldSources.add(new ScentSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+        worldSources.add(new ScentSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
 
         // Microbes
         microbes.add(builder.build(INITIAL_X, INITIAL_Y, Evolve.generateGenome(rng)));
