@@ -116,14 +116,6 @@ public class World extends JPanel implements Runnable {
 
         // Add new microbes
         // Note: doesn't like to use addAll()
-        // int i = 0;
-        // while (microbes.size() <= MAX_MICROBES) {
-        //     // System.out.println(microbesToAdd.size());
-        //     if (microbesToAdd != null && i < microbesToAdd.size()) {
-        //         microbes.add(microbesToAdd.get(i));
-        //     }
-        //     i++;
-        // }
         for (Microbe microbe : microbesToAdd){
             if (microbes.size() < MAX_MICROBES) {
                 microbes.add(microbe);

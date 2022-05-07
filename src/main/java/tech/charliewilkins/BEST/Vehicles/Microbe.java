@@ -48,6 +48,8 @@ public class Microbe {
     private Microbe reproductionCandidate;
     private int reproductionCount;
     private final int reproductionThreshold;
+    private int reproductionCooldown;
+    private final int reproductionHealthCost;
 
     // Other
     // SO it has eight sensor positions,
@@ -81,6 +83,8 @@ public class Microbe {
         this.reproductionCandidate = null;
         this.reproductionCount = 0;
         this.reproductionThreshold = 10;
+        this.reproductionCooldown = 0;
+        this.reproductionHealthCost = 100;
 
         // Other
         this.sensors = sensors;
@@ -283,6 +287,19 @@ public class Microbe {
         ArrayList<Microbe> candidates = new ArrayList<>(microbes);
         candidates.remove(this); //Can't mate with ourselves
 
+        // Reduce cooldown
+        reproductionCooldown = (reproductionCooldown > 0) ? reproductionCooldown - 1 : reproductionCooldown;
+
+        // Can't reproduce if we recently reproduced
+        if (reproductionCooldown > 0){
+            return;
+        }
+
+        // Can't reproduce if we don't have enough health
+        if (health < reproductionHealthCost * 2) {
+            return;
+        }
+
         // If mating is in progress
         if (this.reproductionCandidate != null) {
             // Check candidate still in range
@@ -296,6 +313,8 @@ public class Microbe {
                     worldRef.reproduce(dna, reproductionCandidate.getDNA(), x+(diameter*(rng.nextInt(10)-5)), y+(diameter*(rng.nextInt(10)-5)));
                     reproductionCount = 0;
                     reproductionCandidate = null;
+                    reproductionCooldown = 100;
+                    health -= reproductionHealthCost;
                     return;
                 }
                 // Otherwise, return
@@ -336,5 +355,9 @@ public class Microbe {
 
     public String getDNA() {
         return dna;
+    }
+
+    public int getHealth() {
+        return health;
     }
 }
