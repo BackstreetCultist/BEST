@@ -61,7 +61,7 @@ public class MicrobeBuilder {
         final Sensor[] sensors = buildSensorList(sensorDNA);
         ArrayList<Connector> connectors = buildConnectorList(connectorActivationDNA, connectorCrossoverDNA, connectorConfigDNA, sensors);
 
-        Microbe microbe = new Microbe(x, y, worldRef, sensors, connectors);
+        Microbe microbe = new Microbe(x, y, worldRef, sensors, connectors, genome);
         return microbe;
     }
 

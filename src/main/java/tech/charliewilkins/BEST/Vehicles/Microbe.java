@@ -26,6 +26,7 @@ public class Microbe {
     private World worldRef; // Need a ref to the world it exists in
 
     // Microbe
+    private final String dna;
     private int diameter;
     private int health;
     private ScentSource scent;
@@ -50,11 +51,12 @@ public class Microbe {
     private final ArrayList<Connector> connectors;
     Font font;
 
-    public Microbe(int x, int y, World worldRef, Sensor[] sensors, ArrayList<Connector> connectors) {
+    public Microbe(int x, int y, World worldRef, Sensor[] sensors, ArrayList<Connector> connectors, String dna) {
         // World
         this.worldRef = worldRef;
 
         // Microbe
+        this.dna = dna;
         this.diameter = worldRef.getMicrobeSize();
         this.health = 1000;
         scent = new ScentSource(x,y);
@@ -262,5 +264,9 @@ public class Microbe {
     public Source getScent() {
         scent.setCoords(x, y);
         return scent;
+    }
+
+    public String getDNA() {
+        return dna;
     }
 }
