@@ -256,6 +256,25 @@ public class World extends JPanel implements Runnable {
 
     public static class Evolve {
         public static String generateGenome(Random rng) {
+            // return generateFHGenome();
+            // return generateLSGenome();
+            // return generateFHLSGenome();
+            return generateRandomGenome(rng);
+        }
+
+        public static String generateFHGenome() {
+            return "001000000001000000000000000000000000000000000000";
+        }
+
+        public static String generateLSGenome() {
+            return "000011000000010000000100000001000000000000000000";
+        }
+        
+        public static String generateFHLSGenome() {
+            return "001011000001010000000100000001000000000000000000";
+        }
+
+        public static String generateRandomGenome(Random rng) {
             char[] genome = new char[64];
 
             for (int i = 0; i < 48; i++) {
@@ -268,9 +287,15 @@ public class World extends JPanel implements Runnable {
         public static String evolve(String dna, String dna2, Random rng) {
             // Mutate 1/4 of the genome on a 1/4 chance
             if (rng.nextInt(4) == 0) {
+                // return generateFHGenome();
+                // return generateLSGenome();
+                // return generateFHLSGenome();
                 return mutate(kPointCrossover(dna, dna2, 4, rng), rng);
             }
             else {
+                // return generateFHGenome();
+                // return generateLSGenome();
+                // return generateFHLSGenome();
                 return kPointCrossover(dna, dna2, 4, rng);
             }
         }

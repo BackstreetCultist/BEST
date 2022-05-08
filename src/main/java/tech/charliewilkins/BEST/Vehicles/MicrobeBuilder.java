@@ -38,7 +38,7 @@ public class MicrobeBuilder {
         // Config - number of steps up or down uniformly distributed along WIDTH/2
         // (So 1 results in it activating at half that, 2 results in it stepping up at 2/3 and down at 1/3 etc)
 
-    // DNA for Aggression:
+    // DNA for Aggression (Light):
     // 00 01 00 00
     // 00 01 00 00
     // 00 01 00 00
@@ -47,7 +47,7 @@ public class MicrobeBuilder {
     // 00 00 00 00
     // 000100000001000000010000000000000000000000000000d
 
-    // DNA for Fear:
+    // DNA for Fear (Light):
     // 00 01 00 00
     // 00 01 00 00
     // 00 00 00 00
@@ -56,7 +56,7 @@ public class MicrobeBuilder {
     // 00 00 00 00
     // 000100000001000000000000000000000000000000000000
 
-    // DNA for Love:
+    // DNA for Love (Light):
     // 00 01 00 00
     // 00 01 00 00
     // 00 01 00 00
@@ -65,7 +65,7 @@ public class MicrobeBuilder {
     // 00 00 00 00
     // 000100000001000000010000000100000000000000000000
 
-    // DNA for Exploration:
+    // DNA for Exploration (Light):
     // 00 01 00 00
     // 00 01 00 00
     // 00 00 00 00
