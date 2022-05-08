@@ -9,8 +9,8 @@ import java.awt.geom.Ellipse2D;
 import tech.charliewilkins.BEST.World.World;
 
 public class HeatSource extends Source {
-    public HeatSource(int x, int y, World world) {
-        super(x, y, world, Color.RED);
+    public HeatSource(int x, int y, int health, World world) {
+        super(x, y, health, world, Color.RED);
     }
 
     public void draw (Graphics g) {

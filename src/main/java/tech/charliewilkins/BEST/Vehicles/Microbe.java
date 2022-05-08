@@ -73,7 +73,7 @@ public class Microbe {
         this.diameter = worldRef.getMicrobeSize();
         this.health = 1000;
         this.healthLimit = 1000.0;
-        scent = new ScentSource(x,y, worldRef);
+        scent = new ScentSource(x,y, Integer.MAX_VALUE, worldRef);
 
         // Coordinates
         this.x = x;

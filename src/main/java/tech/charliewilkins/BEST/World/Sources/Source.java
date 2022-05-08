@@ -18,10 +18,12 @@ public class Source {
 
     protected final int diameter;
     protected final Color color;
+    private int health;
 
-    public Source(int x, int y, World world, Color color) {
+    public Source(int x, int y, int health, World world, Color color) {
         this.x = x;
         this.y = y;
+        this.health = health;
 
         this.diameter = world.getSourceDiameter();
         this.color = color;
@@ -56,6 +58,14 @@ public class Source {
 
     public int getY() {
         return y;
+    }
+
+    public void reduceHealth() {
+        health--;
+    }
+
+    public int getHealth() {
+        return health;
     }
 
     public int getDiameter() {

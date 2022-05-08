@@ -5,7 +5,7 @@ import java.awt.Color;
 import tech.charliewilkins.BEST.World.World;
 
 public class LightSource extends Source {
-    public LightSource(int x, int y, World world) {
-        super(x, y, world, Color.YELLOW);
+    public LightSource(int x, int y, int health, World world) {
+        super(x, y, health, world, Color.YELLOW);
     }
 }
