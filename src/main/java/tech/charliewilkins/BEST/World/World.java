@@ -28,6 +28,7 @@ public class World extends JPanel implements Runnable {
     private final int MICROBE_SIZE = 30;
     private final int MAX_MICROBES = 16;
 
+    private int ticks = 10000;
     private Thread animator;
     private Random rng;
     private ArrayList<Source> worldSources; // Collects sources not tied to other objects
@@ -90,6 +91,7 @@ public class World extends JPanel implements Runnable {
         g2d.setPaint(Color.BLACK);
         g2d.setFont(font);
         g2d.drawString(("Microbes: " + Integer.toString(microbes.size())), W_WIDTH - 100, W_HEIGHT - 50);
+        g2d.drawString(("Time: " + Integer.toString(ticks)), W_WIDTH - 100, W_HEIGHT - 25);
     }
 
     public void killMicrobe(Microbe microbe) {
@@ -190,6 +192,11 @@ public class World extends JPanel implements Runnable {
             }
             
             beforeTime = System.currentTimeMillis();
+
+            ticks--;
+            if (ticks <= 0) {
+                break;
+            }
         }
     }
 
