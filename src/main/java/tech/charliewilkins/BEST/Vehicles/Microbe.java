@@ -45,12 +45,13 @@ public class Microbe {
 
     // Reproduction
     private final String dna;
-    private Microbe reproductionCandidate;
-    private int reproductionCount;
-    private final int reproductionThreshold;
-    private int reproductionCooldown;
-    private int reproductionMaxCountdown;
-    private final int reproductionHealthCost;
+    private Microbe reproductionCandidate; //Another microbe this microbe is attempting to reproduction with
+    private int reproductionCount; //How long these two have been in reproduction range
+    private final int reproductionThreshold; //The length of time they must remain to reproduce
+    private int reproductionCooldown; //Must be zero to initiate reproduction
+    private int reproductionMaxCooldown; //What the cooldown is set to after reproducing
+    private final int reproductionHealthLimit; //Microbe must be healthy to initiate reproduction
+    private final int reproductionHealthCost; //How reproduction changes health
 
     // Other
     // SO it has eight sensor positions,
@@ -88,9 +89,10 @@ public class Microbe {
         this.reproductionCandidate = null;
         this.reproductionCount = 0;
         this.reproductionThreshold = 2;
-        this.reproductionCooldown = 0;
-        this.reproductionMaxCountdown = 50;
-        this.reproductionHealthCost = 50;
+        this.reproductionCooldown = reproductionMaxCooldown;
+        this.reproductionMaxCooldown = 50;
+        this.reproductionHealthLimit = 200;
+        this.reproductionHealthCost = -50;
 
         // Other
         this.sensors = sensors;
@@ -301,7 +303,7 @@ public class Microbe {
         }
 
         // Can't reproduce if we don't have enough health
-        if (health < reproductionHealthCost * 2) {
+        if (health < reproductionHealthLimit) {
             return;
         }
 
@@ -318,7 +320,7 @@ public class Microbe {
                     worldRef.reproduce(dna, reproductionCandidate.getDNA(), x+(diameter*(rng.nextInt(10)-5)), y+(diameter*(rng.nextInt(10)-5)));
                     reproductionCount = 0;
                     reproductionCandidate = null;
-                    reproductionCooldown = reproductionMaxCountdown;
+                    reproductionCooldown = reproductionMaxCooldown;
                     health -= reproductionHealthCost;
                     return;
                 }
