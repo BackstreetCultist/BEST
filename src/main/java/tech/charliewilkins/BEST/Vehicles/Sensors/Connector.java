@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
+import tech.charliewilkins.BEST.World.World;
 import tech.charliewilkins.BEST.World.Sources.Source;
 
 // A connector connects a sensor to a motor
@@ -41,6 +42,19 @@ public class Connector {
     public double activate(ArrayList<Source> sources) {
         double velocity = 0;
 
+        // This is a safe way to set graphLength with a possibly null world or set of sources
+        int graphLength = 0;
+        for (Source source : sources) {
+            World world = source.getWorld();
+            if (world != null) {
+                graphLength = world.getWidth() / 2;
+            }
+            if (graphLength != 0) {
+                break;
+            }
+        }
+        
+
         switch(transferance) {
             case EXCITE:
                 velocity = (targetSensor.sense(sources) / factor);
@@ -51,7 +65,7 @@ public class Connector {
                 break;
 
             case CURVE:
-                // TODO implement this behaviour
+                velocity = (targetSensor.curveSense(sources, graphLength, config) / factor);
                 break;
             
             case STEP:

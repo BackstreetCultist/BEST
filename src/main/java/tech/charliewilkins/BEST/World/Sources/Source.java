@@ -6,19 +6,24 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
 
+import tech.charliewilkins.BEST.World.World;
+
 public class Source {
     // Coordinates
     protected int x;
     protected int y;
 
+    // Have reference to world its in
+    protected World world;
+
     protected final int diameter;
     protected final Color color;
 
-    public Source(int x, int y, Color color) {
+    public Source(int x, int y, World world, Color color) {
         this.x = x;
         this.y = y;
 
-        this.diameter = 10;
+        this.diameter = world.getSourceDiameter();
         this.color = color;
     }
 
@@ -55,5 +60,9 @@ public class Source {
 
     public int getDiameter() {
         return diameter;
+    }
+
+    public World getWorld() {
+        return world;
     }
 }

@@ -33,4 +33,27 @@ public class ScentSensor extends Sensor {
         }
         return light;
     }
+
+    public double curveSense (ArrayList<Source> sources, double graphLength, int factor) {
+        double magnitude = 0.0;
+        double pointOnGraph = (graphLength / 4.0) * factor;
+        for (Source source: sources) {
+            if (source.getClass().equals(ScentSource.class) || source.getClass().equals(FoodSource.class)) {
+                int lx = source.getX();
+                int ly = source.getY();
+    
+                double distance = Math.sqrt(((lx-x)*(lx-x)) + ((ly-y)*(ly-y)));
+                
+                // Need to check this scent is not 'us'
+                // The size of the sensor is a fifth of the diameter of the microbe
+                // So if distance greater than radius?
+                if (distance > ((size * 5)/2)+1){
+                    // We want the magnitude to be highest when we are closest to the top of the bell curve
+                    // So when the different between us and that target distance is the smallest
+                    magnitude += 200000.0/((pointOnGraph - distance) * (pointOnGraph - distance));
+                }
+            }
+        }
+        return magnitude;
+    }
 }

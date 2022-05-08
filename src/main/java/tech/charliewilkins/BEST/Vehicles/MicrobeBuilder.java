@@ -33,7 +33,7 @@ public class MicrobeBuilder {
         // Config - none
     // 2 - CURVE - increases around a bell curve - Vehicle 4a
         // Config - places peak on line of WIDTH/2
-        // (So if 1, its at WIDTH/2*1 distance from object, reducing as far from that distance in either direction)
+        // (So if 1, its at (WIDTH/2)+(((WIDTH/2)/4)*1) distance from object, reducing as far from that distance in either direction)
     // 3 - STEP - drive steps up and down - Vehicle 4a
         // Config - number of steps up or down uniformly distributed along WIDTH/2
         // (So 1 results in it activating at half that, 2 results in it stepping up at 2/3 and down at 1/3 etc)

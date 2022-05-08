@@ -6,9 +6,11 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
 
+import tech.charliewilkins.BEST.World.World;
+
 public class HeatSource extends Source {
-    public HeatSource(int x, int y) {
-        super(x, y, Color.RED);
+    public HeatSource(int x, int y, World world) {
+        super(x, y, world, Color.RED);
     }
 
     public void draw (Graphics g) {

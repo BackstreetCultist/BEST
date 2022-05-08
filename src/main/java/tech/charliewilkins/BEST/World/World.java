@@ -28,6 +28,7 @@ public class World extends JPanel implements Runnable {
     private final int SIMULATION_SPEED = 1;
     private final int MICROBE_SIZE = 30;
     private final int MAX_MICROBES = 16;
+    private final int SOURCE_DIAMETER = 10;
 
     private int ticks = 10000;
     private Thread animator;
@@ -154,16 +155,16 @@ public class World extends JPanel implements Runnable {
             int k = rng.nextInt(5);
             switch(k) {
                 case 0:
-                    worldSources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+                    worldSources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50, this));
                     break;
                 case 1:
-                    worldSources.add(new HeatSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+                    worldSources.add(new HeatSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50, this));
                     break;
                 case 2:
-                    worldSources.add(new ScentSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+                    worldSources.add(new ScentSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50, this));
                     break;
                 case 3:
-                    worldSources.add(new FoodSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+                    worldSources.add(new FoodSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50, this));
                     break;
                 default:
                     break;
@@ -211,6 +212,10 @@ public class World extends JPanel implements Runnable {
 
     public ArrayList<Microbe> getMicrobes() {
         return microbes;
+    }
+
+    public int getSourceDiameter() {
+        return SOURCE_DIAMETER;
     }
 
     public static class Evolve {

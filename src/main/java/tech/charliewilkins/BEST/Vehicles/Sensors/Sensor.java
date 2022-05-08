@@ -25,6 +25,10 @@ public class Sensor {
         return 0.0;
     }
 
+    public double curveSense(ArrayList<Source> sources, double graphLength, int factor) {
+        return 0.0;
+    }
+
     public void draw(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
 

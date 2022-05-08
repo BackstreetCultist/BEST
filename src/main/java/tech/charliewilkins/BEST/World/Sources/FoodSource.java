@@ -6,9 +6,11 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
 
+import tech.charliewilkins.BEST.World.World;
+
 public class FoodSource extends Source {
-    public FoodSource(int x, int y) {
-        super(x, y, Color.GREEN);
+    public FoodSource(int x, int y, World world) {
+        super(x, y, world, Color.GREEN);
     }
 
     public void draw (Graphics g) {
