@@ -29,6 +29,7 @@ public class Microbe {
     // Microbe
     private int diameter;
     private int health;
+    private double healthLimit;
     private ScentSource scent;
 
     // Coordinates
@@ -70,6 +71,7 @@ public class Microbe {
         // Microbe
         this.diameter = worldRef.getMicrobeSize();
         this.health = 1000;
+        this.healthLimit = 1000.0;
         scent = new ScentSource(x,y);
 
         // Coordinates
@@ -182,6 +184,10 @@ public class Microbe {
         // Take damage from heat
         heatDamage();
 
+        // Step down health limit
+        healthLimit -= 0.25;
+        // Set health to limit if has healed above it
+        health = (health > healthLimit) ? (int) Math.floor(healthLimit) : health;
         // Step down health and kill if dead
         health -= worldRef.getSimSpeed();
         if (health <= 0) {
