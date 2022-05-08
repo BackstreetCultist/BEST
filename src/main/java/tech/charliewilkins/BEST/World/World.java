@@ -2,7 +2,10 @@ package tech.charliewilkins.BEST.World;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Random;
@@ -71,6 +74,22 @@ public class World extends JPanel implements Runnable {
         }
 
         Toolkit.getDefaultToolkit().sync();
+
+        drawInfo(g);
+    }
+
+    public void drawInfo(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        Font font = new Font("Serif", Font.PLAIN, 14);
+
+        // Rendering Hints
+        RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        rh.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g2d.setRenderingHints(rh);
+
+        g2d.setPaint(Color.BLACK);
+        g2d.setFont(font);
+        g2d.drawString(("Microbes: " + Integer.toString(microbes.size())), W_WIDTH - 100, W_HEIGHT - 50);
     }
 
     public void killMicrobe(Microbe microbe) {
