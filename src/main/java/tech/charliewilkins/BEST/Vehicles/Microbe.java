@@ -83,17 +83,17 @@ public class Microbe {
         this.vl = 0;
         this.vr = 0;
         this.theta = (rng.nextDouble() * 6);
-        this.MIN_SPEED = 5.0;
-        this.CRUISE_SPEED = 10.0;
-        this.MAX_SPEED = 20.0;
+        this.MIN_SPEED = 2.0;
+        this.CRUISE_SPEED = 5.0;
+        this.MAX_SPEED = 10.0;
 
         // Reproduction
         this.dna = dna;
         this.reproductionCandidate = null;
         this.reproductionCount = 0;
-        this.reproductionThreshold = 2;
-        this.reproductionCooldown = reproductionMaxCooldown;
+        this.reproductionThreshold = 5;
         this.reproductionMaxCooldown = 50;
+        this.reproductionCooldown = reproductionMaxCooldown;
         this.reproductionHealthLimit = 200;
         this.reproductionHealthCost = -50;
 
@@ -332,7 +332,7 @@ public class Microbe {
         if (this.reproductionCandidate != null) {
             // Check candidate still in range
             double targetDistance = Math.sqrt(((x-reproductionCandidate.getX())*(x-reproductionCandidate.getX()))+((y-reproductionCandidate.getY())*(y-reproductionCandidate.getY())));
-            if (targetDistance <= diameter) {
+            if (targetDistance <= (diameter*2)) {
                 // If so, add one
                 reproductionCount++;
                 // If threshold reached, call to reproduce
@@ -360,7 +360,7 @@ public class Microbe {
             double candidateDistance = Math.sqrt(((x-candidate.getX())*(x-candidate.getX()))+((y-candidate.getY())*(y-candidate.getY())));
             
             // If we are close enough to this candidate, begin mating
-            if (candidateDistance <= diameter) {
+            if (candidateDistance <= (diameter*2)) {
                 reproductionCandidate = candidate;
                 reproductionCount++;
                 // Return - we can only mate with one microbe at once

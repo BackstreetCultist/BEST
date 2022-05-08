@@ -28,7 +28,7 @@ public class World extends JPanel implements Runnable {
     private final int SIMULATION_SPEED = 1;
     private final int MICROBE_SIZE = 30;
     private final int MAX_MICROBES = 16;
-    private final int SOURCE_COUNT = 16;
+    private final int SOURCE_COUNT = 32;
     private final int SOURCE_DIAMETER = 10;
 
     private int ticks = 10000;
@@ -232,6 +232,10 @@ public class World extends JPanel implements Runnable {
 
             ticks--;
             if (ticks <= 0) {
+                break;
+            }
+
+            if (microbes.size() <= 0) {
                 break;
             }
         }
