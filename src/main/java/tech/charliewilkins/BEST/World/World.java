@@ -67,13 +67,13 @@ public class World extends JPanel implements Runnable {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        for (Microbe microbe : microbes) {
-            microbe.draw(g);
-        }
         
         for (Source source : worldSources) {
             source.draw(g);
+        }
+
+        for (Microbe microbe : microbes) {
+            microbe.draw(g);
         }
 
         Toolkit.getDefaultToolkit().sync();
