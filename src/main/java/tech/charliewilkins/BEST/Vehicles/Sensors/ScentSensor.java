@@ -3,6 +3,7 @@ package tech.charliewilkins.BEST.Vehicles.Sensors;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import tech.charliewilkins.BEST.World.Sources.FoodSource;
 import tech.charliewilkins.BEST.World.Sources.ScentSource;
 import tech.charliewilkins.BEST.World.Sources.Source;
 
@@ -16,7 +17,7 @@ public class ScentSensor extends Sensor {
     public double sense (ArrayList<Source> sources) {
         double light = 0.0;
         for (Source source: sources) {
-            if (source.getClass().equals(ScentSource.class)) {
+            if (source.getClass().equals(ScentSource.class) || source.getClass().equals(FoodSource.class)) {
                 int lx = source.getX();
                 int ly = source.getY();
     

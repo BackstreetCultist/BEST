@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 import tech.charliewilkins.BEST.Vehicles.Microbe;
 import tech.charliewilkins.BEST.Vehicles.MicrobeBuilder;
+import tech.charliewilkins.BEST.World.Sources.FoodSource;
 import tech.charliewilkins.BEST.World.Sources.HeatSource;
 import tech.charliewilkins.BEST.World.Sources.LightSource;
 import tech.charliewilkins.BEST.World.Sources.ScentSource;
@@ -150,7 +151,7 @@ public class World extends JPanel implements Runnable {
 
         // Sources
         for (int i = 0; i < 16; i++) {
-            int k = rng.nextInt(4);
+            int k = rng.nextInt(5);
             switch(k) {
                 case 0:
                     worldSources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
@@ -160,6 +161,9 @@ public class World extends JPanel implements Runnable {
                     break;
                 case 2:
                     worldSources.add(new ScentSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
+                    break;
+                case 3:
+                    worldSources.add(new FoodSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50));
                     break;
                 default:
                     break;

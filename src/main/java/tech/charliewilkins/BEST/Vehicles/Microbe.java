@@ -15,6 +15,7 @@ import tech.charliewilkins.BEST.Vehicles.Sensors.Connector;
 import tech.charliewilkins.BEST.Vehicles.Sensors.Sensor;
 import tech.charliewilkins.BEST.Vehicles.Sensors.Connector.Motor;
 import tech.charliewilkins.BEST.World.World;
+import tech.charliewilkins.BEST.World.Sources.FoodSource;
 import tech.charliewilkins.BEST.World.Sources.HeatSource;
 import tech.charliewilkins.BEST.World.Sources.ScentSource;
 import tech.charliewilkins.BEST.World.Sources.Source;
@@ -181,6 +182,9 @@ public class Microbe {
         y = (y < -20) ? worldRef.getWorldHeight() : y;
         x = (x < -20) ? worldRef.getWorldWidth() : x;
 
+        // Replenish health from food
+        eatFood();
+
         // Take damage from heat
         heatDamage();
 
@@ -280,6 +284,17 @@ public class Microbe {
         if (vl==vr) {
             x += (int) (vr*Math.cos(theta));
             y += (int) (vr*Math.sin(theta));
+        }
+    }
+
+    public void eatFood() {
+        for (Source source : worldRef.getSources()) {
+            if (source.getClass().equals(FoodSource.class)) {
+                double distance = Math.sqrt(((source.getX()-x)*(source.getX()-x)) + ((source.getY()-y)*(source.getY()-y)));
+                if (distance < (source.getDiameter() * 10)) {
+                    health += (source.getDiameter() * 10) - distance;
+                }
+            }
         }
     }
 
