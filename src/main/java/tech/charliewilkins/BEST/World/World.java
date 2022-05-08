@@ -217,7 +217,7 @@ public class World extends JPanel implements Runnable {
         public static String generateGenome(Random rng) {
             char[] genome = new char[64];
 
-            for (int i = 0; i < 32; i++) {
+            for (int i = 0; i < 48; i++) {
                 genome[i] = (rng.nextInt() % 2 == 0) ? '0' : '1';
             }
 

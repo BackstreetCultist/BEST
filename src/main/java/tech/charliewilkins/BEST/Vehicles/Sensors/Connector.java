@@ -13,8 +13,10 @@ import tech.charliewilkins.BEST.World.Sources.Source;
 // Thus each connector has a target sensor, a target motor and an effect
 public class Connector {
     public enum Transferance {
-        DRIVE,
-        INHIBIT
+        EXCITE,
+        INHIBIT,
+        CURVE,
+        STEP
     }
 
     public enum Motor {
@@ -25,23 +27,35 @@ public class Connector {
     private final Sensor targetSensor;
     private final Motor targetMotor;
     private final Transferance transferance;
+    private final int config;
+    private final int factor;
 
-    public Connector (Sensor targetSensor, Motor targetMotor, Transferance transferance) {
+    public Connector (Sensor targetSensor, Motor targetMotor, Transferance transferance, int config, int factor) {
         this.targetSensor = targetSensor;
         this.targetMotor = targetMotor;
         this.transferance = transferance;
+        this.config = config;
+        this.factor = factor;
     }
 
     public double activate(ArrayList<Source> sources) {
         double velocity = 0;
 
         switch(transferance) {
-            case DRIVE:
-                velocity = targetSensor.sense(sources);
+            case EXCITE:
+                velocity = (targetSensor.sense(sources) / factor);
                 break;
 
             case INHIBIT:
-                velocity = -targetSensor.sense(sources);
+                velocity = -(targetSensor.sense(sources) / factor);
+                break;
+
+            case CURVE:
+                // TODO implement this behaviour
+                break;
+            
+            case STEP:
+                // TODO implement this behaviour
                 break;
         }
 
@@ -66,12 +80,22 @@ public class Connector {
 
         Line2D la = new Line2D.Double();
         la.setLine(targetSensor.getX(),targetSensor.getY(),mx,my);
-        if (this.transferance == Transferance.DRIVE) {
-            g2d.setPaint(Color.GREEN);
+
+        switch (transferance) {
+            case EXCITE:
+                g2d.setPaint(Color.GREEN);
+                break;
+            case INHIBIT:
+                g2d.setPaint(Color.RED);
+                break;
+            case CURVE:
+                g2d.setPaint(Color.BLUE);
+                break;
+            case STEP:
+                g2d.setPaint(Color.MAGENTA);
+                break;
         }
-        else {
-            g2d.setPaint(Color.RED);
-        }
+        
         g2d.draw(la);
     }
 
