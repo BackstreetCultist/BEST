@@ -56,4 +56,37 @@ public class ScentSensor extends Sensor {
         }
         return magnitude;
     }
+
+    public double stepSense (ArrayList<Source> sources, double graphLength, int factor) {
+        double magnitude = 0.0;
+        for (Source source: sources) {
+            if (source.getClass().equals(ScentSource.class) || source.getClass().equals(FoodSource.class)) {
+                int lx = source.getX();
+                int ly = source.getY();
+    
+                double distance = Math.sqrt(((lx-x)*(lx-x)) + ((ly-y)*(ly-y)));
+                
+
+                // Need to check this scent is not 'us'
+                // The size of the sensor is a fifth of the diameter of the microbe
+                // So if distance greater than radius?
+                if (distance > ((size * 5)/2)+1){
+                    // Work out the length of the sections of the graph
+                    // Since it is divided equally into up and down sections
+                    double sectionLength = graphLength / (double) (factor + 1);
+                    // We can then divide our distance by this, and floor it
+                    // To give us what number section we are in
+                    int ourSection = (int) (Math.floor(distance / sectionLength));
+                    // If it is an odd-numbered section it is 'up'
+                    boolean up = ourSection % 2 != 0;
+
+                    // If we are in an "up" section of the stepped graph
+                    if (up) {
+                        magnitude += 200000.0/((distance) * (distance));
+                    }
+                }
+            }
+        }
+        return magnitude;
+    }
 }

@@ -44,4 +44,31 @@ public class HeatSensor extends Sensor {
         }
         return magnitude;
     }
+
+    public double stepSense (ArrayList<Source> sources, double graphLength, int factor) {
+        double magnitude = 0.0;
+        for (Source source: sources) {
+            if (source.getClass().equals(HeatSource.class)) {
+                int lx = source.getX();
+                int ly = source.getY();
+    
+                double distance = Math.sqrt(((lx-x)*(lx-x)) + ((ly-y)*(ly-y)));
+
+                // Work out the length of the sections of the graph
+                // Since it is divided equally into up and down sections
+                double sectionLength = graphLength / (double) (factor + 1);
+                // We can then divide our distance by this, and floor it
+                // To give us what number section we are in
+                int ourSection = (int) (Math.floor(distance / sectionLength));
+                // If it is an odd-numbered section it is 'up'
+                boolean up = ourSection % 2 != 0;
+                
+                // If we are in an "up" section of the stepped graph
+                if (up) {
+                    magnitude += 200000.0/((distance) * (distance));
+                }
+            }
+        }
+        return magnitude;
+    }
 }

@@ -69,7 +69,7 @@ public class Connector {
                 break;
             
             case STEP:
-                // TODO implement this behaviour
+                velocity = (targetSensor.stepSense(sources, graphLength, config) / factor);
                 break;
         }
 
