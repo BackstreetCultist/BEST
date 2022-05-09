@@ -26,9 +26,9 @@ public class World extends JPanel implements Runnable {
     private final int W_HEIGHT = 1000;
     private final int DELAY = 25;
     private final int SIMULATION_SPEED = 1;
-    private final int MICROBE_SIZE = 30;
-    private final int MAX_MICROBES = 16;
-    private final int SOURCE_COUNT = 32;
+    private final int MICROBE_SIZE = 15;
+    private final int MAX_MICROBES = 32;
+    private final int SOURCE_COUNT = 48;
     private final int SOURCE_DIAMETER = 10;
 
     private int ticks = 10000;
@@ -204,7 +204,7 @@ public class World extends JPanel implements Runnable {
         }
 
         // Microbes
-        for (int i = 0; i < MAX_MICROBES; i++) {
+        for (int i = 0; i < 32; i++) {
             microbes.add(builder.build(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50, Evolve.generateGenome(rng)));
         }
         

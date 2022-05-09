@@ -92,7 +92,7 @@ public class Microbe {
         this.reproductionCandidate = null;
         this.reproductionCount = 0;
         this.reproductionThreshold = 5;
-        this.reproductionMaxCooldown = 50;
+        this.reproductionMaxCooldown = 100;
         this.reproductionCooldown = reproductionMaxCooldown;
         this.reproductionHealthLimit = 200;
         this.reproductionHealthCost = -50;
