@@ -205,7 +205,7 @@ public class World extends JPanel implements Runnable {
 
         // Microbes
         for (int i = 0; i < 32; i++) {
-            microbes.add(builder.build(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50, Evolve.generateGenome(rng)));
+            microbes.add(builder.build(rng.nextInt((W_WIDTH/5))+(W_WIDTH/10)*2, rng.nextInt((W_HEIGHT/5))+(W_HEIGHT/10)*2, Evolve.generateGenome(rng)));
         }
         
         while (true) {
