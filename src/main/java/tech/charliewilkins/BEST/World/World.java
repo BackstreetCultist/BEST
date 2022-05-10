@@ -157,7 +157,7 @@ public class World extends JPanel implements Runnable {
 
         // Add new sources
         while (worldSources.size() < SOURCE_COUNT) {
-            int k = rng.nextInt(5);
+            int k = rng.nextInt(4);
             switch(k) {
                 case 0:
                     worldSources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50, rng.nextInt(750) + 250, this));
@@ -170,8 +170,6 @@ public class World extends JPanel implements Runnable {
                     break;
                 case 3:
                     worldSources.add(new FoodSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50, rng.nextInt(750) + 250, this));
-                    break;
-                default:
                     break;
             }
         }
@@ -184,7 +182,7 @@ public class World extends JPanel implements Runnable {
 
         // Sources
         for (int i = 0; i < SOURCE_COUNT; i++) {
-            int k = rng.nextInt(5);
+            int k = rng.nextInt(4);
             switch(k) {
                 case 0:
                     worldSources.add(new LightSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50, rng.nextInt(750) + 250, this));
@@ -197,8 +195,6 @@ public class World extends JPanel implements Runnable {
                     break;
                 case 3:
                     worldSources.add(new FoodSource(rng.nextInt((W_WIDTH-100))+50, rng.nextInt(W_HEIGHT-100)+50, rng.nextInt(750) + 250, this));
-                    break;
-                default:
                     break;
             }
         }
@@ -258,8 +254,8 @@ public class World extends JPanel implements Runnable {
         public static String generateGenome(Random rng) {
             // return generateFHGenome();
             // return generateLSGenome();
-            // return generateFHLSGenome();
-            return generateRandomGenome(rng);
+            return generateFHLSGenome();
+            // return generateRandomGenome(rng);
         }
 
         public static String generateFHGenome() {
