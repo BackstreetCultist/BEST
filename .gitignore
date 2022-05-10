@@ -23,7 +23,7 @@
 hs_err_pid*
 
 # Gradle-related
-.gradle/
+# .gradle/
 build/
 # gradle/
 # gradlew
